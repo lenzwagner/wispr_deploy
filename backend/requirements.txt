@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+openai
+anthropic
+python-multipart
+pydantic-settings
+pydantic

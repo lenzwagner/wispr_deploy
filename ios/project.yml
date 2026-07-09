@@ -1,0 +1,37 @@
+name: WisprClone
+options:
+  bundleIdPrefix: com.wispr
+targets:
+  WisprClone:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: WisprClone
+    info:
+      path: WisprClone/Info.plist
+      properties:
+        CFBundleIdentifier: com.wispr.clone
+        UILaunchStoryboardName: LaunchScreen
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+    dependencies:
+      - target: WisprKeyboard
+  WisprKeyboard:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: WisprKeyboard
+    info:
+      path: WisprKeyboard/Info.plist
+      properties:
+        CFBundleIdentifier: com.wispr.clone.keyboard
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.keyboard-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KeyboardViewController
+          NSExtensionAttributes:
+            IsASCIICapable: false
+            PrefersRightToLeft: false
+            PrimaryLanguage: de-DE
+            RequestsOpenAccess: true

@@ -1,0 +1,16 @@
+name: WisprMac
+options:
+  bundleIdPrefix: com.wispr
+targets:
+  WisprMac:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: WisprMac
+    info:
+      path: WisprMac/Info.plist
+      properties:
+        CFBundleIdentifier: com.wispr.mac
+        LSUIElement: true
+        NSMicrophoneUsageDescription: "Wispr Mac benötigt Zugriff auf das Mikrofon, um Audio für die Transkription aufzunehmen."

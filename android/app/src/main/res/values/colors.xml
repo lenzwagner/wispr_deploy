@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    
+    <!-- Premium Color Palette -->
+    <color name="primary">#6366F1</color> <!-- Indigo -->
+    <color name="primary_dark">#4F46E5</color>
+    <color name="accent">#10B981</color> <!-- Emerald -->
+    <color name="background_dark">#0F172A</color> <!-- Slate 900 -->
+    <color name="card_dark">#1E293B</color> <!-- Slate 800 -->
+    <color name="text_primary">#F8FAFC</color> <!-- Slate 50 -->
+    <color name="text_secondary">#94A3B8</color> <!-- Slate 400 -->
+    <color name="recording_red">#EF4444</color> <!-- Red 500 -->
+</resources>

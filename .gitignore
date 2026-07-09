@@ -1,0 +1,21 @@
+# Python
+**/__pycache__/
+*.py[cod]
+*$py.class
+backend/.env
+
+# macOS
+.DS_Store
+mac/WisprMac.xcodeproj/
+mac/DerivedData/
+
+# Android
+.gradle/
+build/
+app/build/
+local.properties
+.idea/
+
+# iOS
+ios/WisprClone.xcodeproj/
+ios/DerivedData/
