@@ -388,3 +388,74 @@
 }, falling back to CGEvent
 [2026-07-09 12:00:26 +0000] Fallback to CGEvent paste simulation...
 [2026-07-09 12:00:26 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 12:33:58 +0000] Text copied to clipboard: Hallo Tim, ich wollte noch einmal nachfragen, ob der Termin nächste Woche noch steht. Über eine Rückmeldung würde ich mich sehr freuen. 
+Liebe Grüße, 
+Lorenz.
+[2026-07-09 12:33:58 +0000] AXIsProcessTrusted: true
+[2026-07-09 12:33:58 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-09 12:33:58 +0000] Executing AppleScript paste...
+[2026-07-09 12:33:58 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 12:33:58 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 12:33:58 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 12:34:53 +0000] Text copied to clipboard: Bitte direkt einsetzen.
+[2026-07-09 12:34:53 +0000] AXIsProcessTrusted: true
+[2026-07-09 12:34:53 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-09 12:34:53 +0000] Executing AppleScript paste...
+[2026-07-09 12:34:53 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 12:34:53 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 12:34:53 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 12:35:07 +0000] Text copied to clipboard: Sehr geehrte Damen und Herren, ich wollte mich einmal erkundigen, ob der Termin nächste Woche noch steht. 
+Mit freundlichen Grüßen, 
+Lorenz Fragner.
+[2026-07-09 12:35:08 +0000] AXIsProcessTrusted: true
+[2026-07-09 12:35:08 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-09 12:35:08 +0000] Executing AppleScript paste...
+[2026-07-09 12:35:08 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 12:35:08 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 12:35:08 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 12:35:08 +0000] Text copied to clipboard: Sehr geehrte Damen und Herren, ich wollte mich einmal erkundigen, ob der Termin nächste Woche noch steht. 
+Mit freundlichen Grüßen, 
+Lorenz Fragner.
+[2026-07-09 12:35:09 +0000] AXIsProcessTrusted: true
+[2026-07-09 12:35:09 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-09 12:35:09 +0000] Executing AppleScript paste...
+[2026-07-09 12:35:09 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 12:35:09 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 12:35:09 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 12:36:38 +0000] Text copied to clipboard: Ich will meinen System-Prompt-Command anpassen, damit er genau den gleichen Output wie WhisperFlow liefert. Also beispielsweise korrekte Formatierung bei E-Mails oder bei Aufzählungen und so weiter. Wie muss ich den Code anpassen?
+[2026-07-09 12:36:39 +0000] AXIsProcessTrusted: true
+[2026-07-09 12:36:39 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-09 12:36:39 +0000] Executing AppleScript paste...
+[2026-07-09 12:36:39 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 12:36:39 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 12:36:39 +0000] CGEvent paste simulation posted successfully
