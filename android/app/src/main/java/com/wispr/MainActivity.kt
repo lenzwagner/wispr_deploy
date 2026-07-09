@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var urlInput: EditText
     private lateinit var saveUrlButton: Button
+    private lateinit var colorBackgroundInput: EditText
+    private lateinit var colorActionInput: EditText
+    private lateinit var colorIconInput: EditText
+    private lateinit var saveColorsButton: Button
     private lateinit var masterEnabledSwitch: com.google.android.material.switchmaterial.SwitchMaterial
     private lateinit var btnAccessibility: Button
     private lateinit var btnOverlay: Button
@@ -48,6 +52,10 @@ class MainActivity : AppCompatActivity() {
         // Initialize Views
         urlInput = findViewById(R.id.urlInput)
         saveUrlButton = findViewById(R.id.saveUrlButton)
+        colorBackgroundInput = findViewById(R.id.colorBackgroundInput)
+        colorActionInput = findViewById(R.id.colorActionInput)
+        colorIconInput = findViewById(R.id.colorIconInput)
+        saveColorsButton = findViewById(R.id.saveColorsButton)
         masterEnabledSwitch = findViewById(R.id.masterEnabledSwitch)
         btnAccessibility = findViewById(R.id.btnAccessibility)
         btnOverlay = findViewById(R.id.btnOverlay)
@@ -78,6 +86,10 @@ class MainActivity : AppCompatActivity() {
         
         val isMasterEnabled = prefs.getBoolean("master_enabled", true)
         masterEnabledSwitch.isChecked = isMasterEnabled
+
+        colorBackgroundInput.setText(prefs.getString("color_bg", "#F5F3FF"))
+        colorActionInput.setText(prefs.getString("color_action", "#6366F1"))
+        colorIconInput.setText(prefs.getString("color_icon", "#4F46E5"))
     }
 
     private fun setupListeners() {
@@ -104,6 +116,20 @@ class MainActivity : AppCompatActivity() {
                     .apply()
                 Toast.makeText(this, "Backend URL gespeichert!", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        saveColorsButton.setOnClickListener {
+            val bg = colorBackgroundInput.text.toString().trim()
+            val action = colorActionInput.text.toString().trim()
+            val icon = colorIconInput.text.toString().trim()
+            
+            getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
+                .edit()
+                .putString("color_bg", bg)
+                .putString("color_action", action)
+                .putString("color_icon", icon)
+                .apply()
+            Toast.makeText(this, "Farben gespeichert!", Toast.LENGTH_SHORT).show()
         }
 
         btnAccessibility.setOnClickListener {

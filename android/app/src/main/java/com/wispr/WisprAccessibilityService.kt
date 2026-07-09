@@ -4,6 +4,7 @@ import android.util.Log
 import android.accessibilityservice.AccessibilityService
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.media.MediaRecorder
 import android.os.Build
@@ -61,7 +62,7 @@ class WisprAccessibilityService : AccessibilityService() {
     private var btnConfirm: View? = null
     private var recordingPulse: View? = null
     private var polishingProgress: ProgressBar? = null
-    private var waveformAnim: View? = null
+    private var waveformAnim: ImageView? = null
 
     private var mediaRecorder: MediaRecorder? = null
     private var audioFile: File? = null
@@ -95,7 +96,14 @@ class WisprAccessibilityService : AccessibilityService() {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED, 
             AccessibilityEvent.TYPE_WINDOWS_CHANGED,
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-                checkAndManageFloatingMicVisibility()
+                // Robustness: If the event source is an editable node, use it directly
+                val source = event.source
+                if (source != null && source.isEditable) {
+                    currentFocusedNode = source
+                    showFloatingMic()
+                } else {
+                    checkAndManageFloatingMicVisibility()
+                }
             }
         }
     }
@@ -149,15 +157,45 @@ class WisprAccessibilityService : AccessibilityService() {
         }
     }
 
+    private fun updateFloatingMicAppearance() {
+        val prefs = getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
+        val bgColor = parseColorSafely(prefs.getString("color_bg", "#F5F3FF"), Color.parseColor("#F5F3FF"))
+        val actionColor = parseColorSafely(prefs.getString("color_action", "#6366F1"), Color.parseColor("#6366F1"))
+        val iconColor = parseColorSafely(prefs.getString("color_icon", "#4F46E5"), Color.parseColor("#4F46E5"))
+
+        micCard?.setCardBackgroundColor(android.content.res.ColorStateList.valueOf(bgColor))
+        btnConfirm?.backgroundTintList = android.content.res.ColorStateList.valueOf(actionColor)
+        
+        micIcon?.setColorFilter(iconColor)
+        (btnCancel as? ImageView)?.setColorFilter(iconColor)
+        waveformAnim?.setColorFilter(iconColor)
+        polishingProgress?.indeterminateTintList = android.content.res.ColorStateList.valueOf(iconColor)
+    }
+
+    private fun parseColorSafely(hex: String?, fallback: Int): Int {
+        return try {
+            Color.parseColor(hex)
+        } catch (e: Exception) {
+            fallback
+        }
+    }
+
     private fun findFocusedEditableNode(root: AccessibilityNodeInfo?): AccessibilityNodeInfo? {
         if (root == null) return null
-        if (root.isEditable && root.isFocused) return root
         
+        // Priority 1: Properly focused and editable
+        if (root.isEditable && (root.isFocused || root.isAccessibilityFocused)) return root
+        
+        // Recursive search
         for (i in 0 until root.childCount) {
             val child = root.getChild(i)
             val found = findFocusedEditableNode(child)
             if (found != null) return found
         }
+
+        // Priority 2: Visible to user and editable (e.g. search fields that don't report focus correctly)
+        if (root.isEditable && root.isVisibleToUser) return root
+
         return null
     }
 
@@ -174,7 +212,10 @@ class WisprAccessibilityService : AccessibilityService() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun showFloatingMic() {
-        if (floatingView != null) return
+        if (floatingView != null) {
+            updateFloatingMicAppearance()
+            return
+        }
         if (!Settings.canDrawOverlays(this)) return
 
         val themedContext = android.view.ContextThemeWrapper(this, R.style.Theme_Wispr)
@@ -189,6 +230,8 @@ class WisprAccessibilityService : AccessibilityService() {
         recordingPulse = floatingView?.findViewById(R.id.recordingPulse)
         polishingProgress = floatingView?.findViewById(R.id.polishingProgress)
         waveformAnim = floatingView?.findViewById(R.id.waveformAnim)
+
+        updateFloatingMicAppearance()
 
         val prefs = getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
         val lastX = prefs.getInt("bubble_x", 100)
@@ -488,8 +531,15 @@ class WisprAccessibilityService : AccessibilityService() {
     private fun injectText(polishedText: String) {
         val node = currentFocusedNode ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
         if (node != null) {
+            val existingText = node.text?.toString() ?: ""
+            val textToInject = if (existingText.isNotEmpty() && !existingText.endsWith(" ")) {
+                "$existingText $polishedText"
+            } else {
+                "$existingText$polishedText"
+            }
+
             val arguments = Bundle().apply {
-                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, polishedText)
+                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, textToInject)
             }
             node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
             Toast.makeText(this, "Text eingefügt!", Toast.LENGTH_SHORT).show()
