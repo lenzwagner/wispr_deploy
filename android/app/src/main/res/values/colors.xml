@@ -17,4 +17,5 @@
     <color name="text_primary">#F8FAFC</color> <!-- Slate 50 -->
     <color name="text_secondary">#94A3B8</color> <!-- Slate 400 -->
     <color name="recording_red">#EF4444</color> <!-- Red 500 -->
+    <color name="light_purple">#F5F3FF</color>
 </resources>

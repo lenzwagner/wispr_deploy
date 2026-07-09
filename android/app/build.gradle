@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.wispr.clone'
+    namespace 'com.wispr'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.wispr.clone"
+        applicationId "com.wispr"
         minSdk 26
         targetSdk 35
         versionCode 1

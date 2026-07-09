@@ -1,0 +1,377 @@
+[2026-07-09 08:06:24 +0000] Text copied to clipboard: Ich gehe gerne zum Sport.
+[2026-07-09 08:06:25 +0000] AXIsProcessTrusted: false
+[2026-07-09 08:06:25 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:06:25 +0000] Executing AppleScript paste...
+[2026-07-09 08:06:25 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:06:25 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:06:25 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:08:21 +0000] Text copied to clipboard: Klappt es nun?
+[2026-07-09 08:08:21 +0000] AXIsProcessTrusted: false
+[2026-07-09 08:08:21 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:08:21 +0000] Executing AppleScript paste...
+[2026-07-09 08:08:21 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:08:21 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:08:21 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:08:53 +0000] Text copied to clipboard: Klappt das jetzt?
+[2026-07-09 08:08:53 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:08:53 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:08:53 +0000] Executing AppleScript paste...
+[2026-07-09 08:08:53 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:08:53 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:08:53 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:09:07 +0000] Text copied to clipboard: Heute Morgen wird das folgendermaßen gehandhabt: Ich mag Äpfel.
+[2026-07-09 08:09:07 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:09:07 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:09:07 +0000] Executing AppleScript paste...
+[2026-07-09 08:09:07 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:09:07 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:09:07 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:09:17 +0000] Text copied to clipboard: Wie wird das Wetter morgen? Ich mag Äpfel.
+[2026-07-09 08:09:18 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:09:18 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-09 08:09:18 +0000] Executing AppleScript paste...
+[2026-07-09 08:09:18 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:09:18 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:09:18 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:11:06 +0000] Text copied to clipboard: Die Android-App funktioniert noch nicht ganz einwandfrei.
+[2026-07-09 08:11:06 +0000] AXIsProcessTrusted: false
+[2026-07-09 08:11:06 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:11:06 +0000] Executing AppleScript paste...
+[2026-07-09 08:11:06 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:11:06 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:11:06 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:11:19 +0000] Text copied to clipboard: Das Einfügen klappt wieder nicht.
+[2026-07-09 08:11:19 +0000] AXIsProcessTrusted: false
+[2026-07-09 08:11:19 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:11:19 +0000] Executing AppleScript paste...
+[2026-07-09 08:11:19 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:11:19 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:11:19 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:11:39 +0000] Text copied to clipboard: Ich liebe Pokémon.
+[2026-07-09 08:11:39 +0000] AXIsProcessTrusted: false
+[2026-07-09 08:11:39 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:11:39 +0000] Executing AppleScript paste...
+[2026-07-09 08:11:39 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:11:39 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:11:39 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:12:32 +0000] Text copied to clipboard: Ich liebe dich.
+[2026-07-09 08:12:32 +0000] AXIsProcessTrusted: false
+[2026-07-09 08:12:32 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:12:32 +0000] Executing AppleScript paste...
+[2026-07-09 08:12:32 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:12:32 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:12:32 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:12:41 +0000] Text copied to clipboard: Ich liebe Pokémon und Yu-Gi-Oh!
+[2026-07-09 08:12:41 +0000] AXIsProcessTrusted: false
+[2026-07-09 08:12:41 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:12:41 +0000] Executing AppleScript paste...
+[2026-07-09 08:12:41 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:12:41 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:12:41 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:13:23 +0000] Text copied to clipboard: Das ist ein Test meiner neuen Android-App.
+[2026-07-09 08:13:23 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:13:23 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:13:23 +0000] Executing AppleScript paste...
+[2026-07-09 08:13:23 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:13:23 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:13:23 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:13:44 +0000] Text copied to clipboard: Bei der Installation der Android-App wird angezeigt, dass das Dokument nicht geöffnet werden kann, da ein interner Fehler aufgetreten ist.
+[2026-07-09 08:13:44 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:13:44 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:13:44 +0000] Executing AppleScript paste...
+[2026-07-09 08:13:44 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:13:44 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:13:44 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:20:47 +0000] Text copied to clipboard: Bei Android soll im Floating Button die Menüoption mit den drei Punkten entfernt werden. Der Button soll nur sichtbar sein, wenn ein Eingabefeld angeklickt wird; ansonsten bleibt er unsichtbar.
+[2026-07-09 08:20:48 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:20:48 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:20:48 +0000] Executing AppleScript paste...
+[2026-07-09 08:20:48 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:20:48 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:20:48 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:47:45 +0000] Text copied to clipboard: Die notwendigen Einstellungen müssen überprüft werden. Dort erhält man den Fehler: "App wurde Zugriff verweigert".
+[2026-07-09 08:47:46 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:47:46 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:47:46 +0000] Executing AppleScript paste...
+[2026-07-09 08:47:46 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:47:46 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:47:46 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 08:54:34 +0000] Text copied to clipboard: In der App sollte es klarer sichtbar sein, wann das Mikrofon aktiv ist und aufnimmt, und wann nicht, insbesondere im Floating Button.
+[2026-07-09 08:54:35 +0000] AXIsProcessTrusted: true
+[2026-07-09 08:54:35 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 08:54:35 +0000] Executing AppleScript paste...
+[2026-07-09 08:54:35 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 08:54:35 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 08:54:35 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:02:51 +0000] Text copied to clipboard: In der Android-App kann man auch sehen, welche die aktuelle History der eingesprochenen Dinge war.
+[2026-07-09 09:02:51 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:02:51 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 09:02:51 +0000] Executing AppleScript paste...
+[2026-07-09 09:02:51 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:02:51 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:02:51 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:03:28 +0000] Text copied to clipboard: Aktuell haben wir noch das Problem, dass der Floating Button immer angezeigt wird, egal ob man in einem Textfeld zum Schreiben ist oder nicht. Der Button soll nur erscheinen, wenn die Tastatur erscheint, und dann wieder verschwinden, wenn man nichts mehr schreiben kann.
+[2026-07-09 09:03:28 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:03:28 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 09:03:28 +0000] Executing AppleScript paste...
+[2026-07-09 09:03:28 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:03:28 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:03:28 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:14:11 +0000] Text copied to clipboard: In der NID-App wird einfach überall "Whisper" (W-I-S-P-E-R) verwendet, nicht "Whisper Clone", sowohl in Android als auch in macOS.
+[2026-07-09 09:14:12 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:14:12 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 09:14:12 +0000] Executing AppleScript paste...
+[2026-07-09 09:14:12 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:14:12 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:14:12 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:14:44 +0000] Text copied to clipboard: Aktuell wird in der Android-App noch "WhisperClone" angezeigt. Entferne "WhisperClone" überall.
+[2026-07-09 09:14:44 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:14:44 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 09:14:44 +0000] Executing AppleScript paste...
+[2026-07-09 09:14:44 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:14:44 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:14:44 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:21:48 +0000] Text copied to clipboard: Deaktiviere Caveman.
+[2026-07-09 09:21:48 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:21:48 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-09 09:21:48 +0000] Executing AppleScript paste...
+[2026-07-09 09:21:49 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:21:49 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:21:49 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:31:32 +0000] Text copied to clipboard: Deaktiviere Caveman.
+[2026-07-09 09:31:33 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:31:33 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-09 09:31:33 +0000] Executing AppleScript paste...
+[2026-07-09 09:31:33 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:31:33 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:31:33 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:31:41 +0000] Text copied to clipboard: Kann ich auch einen API-Key von NVIDIA, zum Beispiel, nehmen?
+[2026-07-09 09:31:42 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:31:42 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-09 09:31:42 +0000] Executing AppleScript paste...
+[2026-07-09 09:31:42 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:31:42 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:31:42 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:44:46 +0000] Text copied to clipboard: Macht den Icon für Android rund.
+[2026-07-09 09:44:46 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:44:46 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 09:44:46 +0000] Executing AppleScript paste...
+[2026-07-09 09:44:46 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:44:46 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:44:46 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 09:55:58 +0000] Text copied to clipboard: Die Änderung des Textes durch die KI ist etwas zu aggressiv. Sie soll nur Füllwörter und Rechtschreibung anpassen, aber nicht unbedingt den Satz komplett umstrukturieren.
+[2026-07-09 09:55:58 +0000] AXIsProcessTrusted: true
+[2026-07-09 09:55:58 +0000] Frontmost Application: Antigravity IDE (com.google.antigravity-ide)
+[2026-07-09 09:55:58 +0000] Executing AppleScript paste...
+[2026-07-09 09:55:59 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 09:55:59 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 09:55:59 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 10:18:09 +0000] Text copied to clipboard: Ich werde eine Funktion hinzufügen, die es ermöglicht, den Bubble für einen bestimmten Zeitraum zu verbergen, wenn er nach unten gezogen wird. Zum Beispiel soll ich ihn für 10 Minuten verbergen können, was ich dann in den Einstellungen festlegen möchte. Der Bubble wird dann für 10 Minuten nicht erscheinen, wenn ich etwas eintippen will. Außerdem möchte ich den Timer individuell einstellen können.
+[2026-07-09 10:18:09 +0000] AXIsProcessTrusted: true
+[2026-07-09 10:18:09 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 10:18:09 +0000] Executing AppleScript paste...
+[2026-07-09 10:18:09 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 10:18:09 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 10:18:09 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 10:51:21 +0000] Text copied to clipboard: Danke.
+[2026-07-09 10:51:21 +0000] AXIsProcessTrusted: true
+[2026-07-09 10:51:21 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 10:51:21 +0000] Executing AppleScript paste...
+[2026-07-09 10:51:21 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 10:51:21 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 10:51:21 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 10:51:21 +0000] Text copied to clipboard: Danke.
+[2026-07-09 10:51:22 +0000] AXIsProcessTrusted: true
+[2026-07-09 10:51:22 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 10:51:22 +0000] Executing AppleScript paste...
+[2026-07-09 10:51:22 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 10:51:22 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 10:51:22 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 10:51:32 +0000] Text copied to clipboard: Nach einem Dismiss kann ich in der aktuellen Version nicht wieder reaktivieren, da dies in den Einstellungen nicht möglich ist.
+[2026-07-09 10:51:33 +0000] AXIsProcessTrusted: true
+[2026-07-09 10:51:33 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 10:51:33 +0000] Executing AppleScript paste...
+[2026-07-09 10:51:33 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 10:51:33 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 10:51:33 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 10:51:33 +0000] Text copied to clipboard: Nach einem Dismiss kann ich in der aktuellen Version die Funktion nicht wieder in den Einstellungen reaktivieren.
+[2026-07-09 10:51:34 +0000] AXIsProcessTrusted: true
+[2026-07-09 10:51:34 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 10:51:34 +0000] Executing AppleScript paste...
+[2026-07-09 10:51:34 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 10:51:34 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 10:51:34 +0000] CGEvent paste simulation posted successfully

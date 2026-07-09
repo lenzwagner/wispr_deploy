@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wispr Clone</string>
-    <string name="accessibility_service_description">Wispr Clone Accessibility Service ermöglicht es dir, durch langes Halten eines schwebenden Mikrofons überall systemweit Text einzusprechen, der durch eine KI bereinigt und direkt in das aktive Eingabefeld eingefügt wird.</string>
-    <string name="accessibility_service_label">Wispr Clone Voice Input</string>
+    <string name="app_name">Wispr</string>
+    <string name="accessibility_service_description">Wispr Accessibility Service ermöglicht es dir, durch langes Halten eines schwebenden Mikrofons überall systemweit Text einzusprechen, der durch eine KI bereinigt und direkt in das aktive Eingabefeld eingefügt wird.</string>
+    <string name="accessibility_service_label">Wispr Voice Input</string>
 </resources>

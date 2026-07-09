@@ -8,8 +8,8 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
     private init() {
         // Create the window
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 350),
-            styleMask: [.titled, .closable, .miniaturizable],
+            contentRect: NSRect(x: 0, y: 0, width: 500, height: 500),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered,
             defer: false
         )
@@ -28,9 +28,10 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
     func showSettings() {
         // Temporarily change activation policy to accessory so the window can receive focus and appear on screen
         NSApp.setActivationPolicy(.accessory)
+        NSApp.activate(ignoringOtherApps: true)
         
         self.window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
+        self.window?.makeKey()
     }
     
     func windowWillClose(_ notification: Notification) {

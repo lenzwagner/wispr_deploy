@@ -7,11 +7,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@android:drawable/ic_btn_speak_now"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@android:drawable/ic_btn_speak_now"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WisprClone"
+        android:theme="@style/Theme.Wispr"
         android:usesCleartextTraffic="true">
         
         <activity
@@ -24,7 +24,7 @@
         </activity>
 
         <service
-            android:name=".WisprCloneAccessibilityService"
+            android:name=".WisprAccessibilityService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true">
             <intent-filter>

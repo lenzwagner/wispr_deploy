@@ -8,6 +8,8 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: WisprMac
+    settings:
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     info:
       path: WisprMac/Info.plist
       properties:

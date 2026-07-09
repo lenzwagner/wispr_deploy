@@ -137,6 +137,13 @@ class MenuBarController: NSObject {
     }
     
     private func startRecording() {
+        // Dismiss settings window if open so focus goes back to the target app
+        DispatchQueue.main.async {
+            if SettingsWindowController.shared.window?.isVisible == true {
+                SettingsWindowController.shared.window?.close()
+            }
+        }
+        
         do {
             let settings = [
                 AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -166,7 +173,7 @@ class MenuBarController: NSObject {
         updateStatusItemUI()
         
         // Trigger upload
-        let backendUrl = UserDefaults.standard.string(forKey: "backend_url") ?? "http://localhost:8000"
+        let backendUrl = UserDefaults.standard.string(forKey: "backend_url") ?? "https://wispr-deploy.onrender.com"
         uploadAudio(fileUrl: audioFilename, backendUrlString: backendUrl)
     }
     
@@ -224,6 +231,19 @@ class MenuBarController: NSObject {
                 return
             }
             
+            if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+                var errorMessage = "Server-Fehler: Status \(httpResponse.statusCode)"
+                if let data = data,
+                   let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let detail = json["detail"] as? String {
+                    errorMessage = "Server-Fehler: \(detail)"
+                }
+                DispatchQueue.main.async {
+                    self.showErrorAlert(message: errorMessage)
+                }
+                return
+            }
+            
             guard let data = data else { return }
             
             do {
@@ -248,50 +268,97 @@ class MenuBarController: NSObject {
         updateStatusItemUI()
     }
     
+    private func logToFile(_ message: String) {
+        let logMessage = "[\(Date())] \(message)\n"
+        let logURL = URL(fileURLWithPath: "/Users/lenz/Documents/Apps/wispr/mac_debug.log")
+        if let data = logMessage.data(using: .utf8) {
+            if FileManager.default.fileExists(atPath: logURL.path) {
+                if let fileHandle = try? FileHandle(forWritingTo: logURL) {
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.write(data)
+                    fileHandle.closeFile()
+                }
+            } else {
+                try? data.write(to: logURL)
+            }
+        }
+    }
+
     private func injectTextGlobally(text: String) {
+        // 1. Set new text to clipboard
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(text, forType: .string)
+        logToFile("Text copied to clipboard: \(text)")
+        
+        // Save to 24-hour dictation history
+        HistoryManager.shared.saveItem(text: text)
+        
         // Wait 0.2 seconds for the user to fully release the hotkey modifier keys (Command/Option)
         // so that they do not interfere with the simulated Cmd+V keystroke.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            // 1. Save current clipboard contents
-            let pasteboard = NSPasteboard.general
-            let oldItems = pasteboard.pasteboardItems?.map { item -> NSPasteboardItem in
-                let newItem = NSPasteboardItem()
-                for type in item.types {
-                    if let data = item.data(forType: type) {
-                        newItem.setData(data, forType: type)
-                    }
-                }
-                return newItem
+            // Check Accessibility trust
+            let isTrusted = AXIsProcessTrusted()
+            self.logToFile("AXIsProcessTrusted: \(isTrusted)")
+            
+            if let activeApp = NSWorkspace.shared.frontmostApplication {
+                self.logToFile("Frontmost Application: \(activeApp.localizedName ?? "nil") (\(activeApp.bundleIdentifier ?? "nil"))")
+            } else {
+                self.logToFile("Frontmost Application: None")
             }
             
-            // 2. Set new text to clipboard
-            pasteboard.clearContents()
-            pasteboard.declareTypes([.string], owner: nil)
-            pasteboard.setString(text, forType: .string)
+            // Attempt AppleScript paste (highly reliable system integration)
+            let appleScript = """
+            tell application "System Events"
+                keystroke "v" using command down
+            end tell
+            """
             
-            // 3. Simulate Cmd+V keystroke
-            let src = CGEventSource(stateID: .combinedSessionState)
-            
-            // Key code for 'v' is 9
-            let vDown = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: true)
-            vDown?.flags = .maskCommand
-            let vUp = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: false)
-            vUp?.flags = .maskCommand
-            
-            vDown?.post(tap: .cgAnnotatedSessionEventTap)
-            vUp?.post(tap: .cgAnnotatedSessionEventTap)
-            
-            // 4. Wait 1.0 second before restoring old clipboard contents to guarantee the target app has finished pasting.
-            if let items = oldItems {
-                DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
-                    let pb = NSPasteboard.general
-                    pb.clearContents()
-                    for item in items {
-                        pb.writeObjects([item])
-                    }
+            self.logToFile("Executing AppleScript paste...")
+            if let scriptObject = NSAppleScript(source: appleScript) {
+                var errorDict: NSDictionary?
+                scriptObject.executeAndReturnError(&errorDict)
+                if let error = errorDict {
+                    self.logToFile("AppleScript paste failed: \(error), falling back to CGEvent")
+                    self.simulatePasteViaCGEvent()
+                } else {
+                    self.logToFile("AppleScript paste executed successfully")
                 }
+            } else {
+                self.logToFile("Could not initialize AppleScript, falling back to CGEvent")
+                self.simulatePasteViaCGEvent()
             }
         }
+    }
+    
+    private func simulatePasteViaCGEvent() {
+        self.logToFile("Fallback to CGEvent paste simulation...")
+        let src = CGEventSource(stateID: .hidSystemState)
+        let loc = CGEventTapLocation.cghidEventTap
+        
+        // 1. Command Key Down
+        let cmdDown = CGEvent(keyboardEventSource: src, virtualKey: 0x37, keyDown: true)
+        cmdDown?.flags = .maskCommand
+        cmdDown?.post(tap: loc)
+        usleep(10000) // 10ms delay to let the OS register the modifier key down state
+        
+        // 2. 'V' Key Down
+        let vDown = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: true)
+        vDown?.flags = .maskCommand
+        vDown?.post(tap: loc)
+        usleep(10000) // 10ms delay
+        
+        // 3. 'V' Key Up
+        let vUp = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: false)
+        vUp?.flags = .maskCommand
+        vUp?.post(tap: loc)
+        usleep(10000) // 10ms delay
+        
+        // 4. Command Key Up
+        let cmdUp = CGEvent(keyboardEventSource: src, virtualKey: 0x37, keyDown: false)
+        cmdUp?.post(tap: loc)
+        self.logToFile("CGEvent paste simulation posted successfully")
     }
     
     private func showErrorAlert(message: String) {

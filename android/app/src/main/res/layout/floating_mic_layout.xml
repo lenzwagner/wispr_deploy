@@ -2,51 +2,107 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/micCard"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         app:cardCornerRadius="28dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="@color/primary"
+        app:cardBackgroundColor="@color/light_purple"
         app:strokeWidth="0dp">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <!-- Pulse indicator overlay (visible when recording) -->
-            <View
-                android:id="@+id/recordingPulse"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/circle_red"
-                android:visibility="gone" />
-
-            <!-- Mic icon -->
+            <!-- Collapsed state: Only the waveform icon -->
             <ImageView
                 android:id="@+id/micIcon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center"
-                android:contentDescription="Record Button"
-                android:src="@android:drawable/ic_btn_speak_now"
-                app:tint="@color/white" />
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="16dp"
+                android:src="@drawable/ic_waveform"
+                app:tint="@color/primary"
+                android:visibility="visible" />
 
-            <!-- Progress bar overlay for loading/polishing state -->
-            <ProgressBar
-                android:id="@+id/polishingProgress"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/white"
-                android:visibility="gone" />
+            <!-- Expanded state: Cancel, Recording Status, Confirm -->
+            <LinearLayout
+                android:id="@+id/expandedControls"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:visibility="gone">
 
-        </FrameLayout>
+                <!-- Cancel Button -->
+                <ImageButton
+                    android:id="@+id/btnCancel"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_white"
+                    android:src="@drawable/ic_close"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    app:tint="@color/text_secondary"
+                    android:contentDescription="Abbrechen" />
+
+                <!-- Recording / Progress Area -->
+                <FrameLayout
+                    android:id="@+id/statusArea"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@drawable/pill_white">
+
+                    <!-- Pulsing background when recording -->
+                    <View
+                        android:id="@+id/recordingPulse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/pill_white"
+                        android:alpha="0" />
+
+                    <ImageView
+                        android:id="@+id/waveformAnim"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_waveform"
+                        app:tint="@color/primary" />
+
+                    <ProgressBar
+                        android:id="@+id/polishingProgress"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/primary"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+                <!-- Confirm Button -->
+                <ImageButton
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_primary"
+                    android:src="@drawable/ic_check"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    app:tint="@color/white"
+                    android:contentDescription="Bestätigen" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

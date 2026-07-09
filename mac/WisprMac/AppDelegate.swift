@@ -1,4 +1,5 @@
 import Cocoa
+import AVFoundation
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -10,6 +11,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Request Accessibility permissions to allow keyboard simulation (Cmd+V)
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
         _ = AXIsProcessTrustedWithOptions(options as CFDictionary)
+        
+        // Request Microphone permissions
+        AVCaptureDevice.requestAccess(for: .audio) { granted in
+            print("AppDelegate: Microphone access granted: \(granted)")
+        }
         
         // Initialize the status bar item controller
         menuBarController = MenuBarController()
