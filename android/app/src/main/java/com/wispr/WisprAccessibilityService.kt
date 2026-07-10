@@ -4,6 +4,8 @@ import android.util.Log
 import android.accessibilityservice.AccessibilityService
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.ClipboardManager
+import android.content.ClipData
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.media.MediaRecorder
@@ -138,22 +140,35 @@ class WisprAccessibilityService : AccessibilityService() {
         val activeFocusedNode = root?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
         
         // Fallback: If findFocus fails, try a recursive search for an editable node that is focused
-        var nodeToShow = activeFocusedNode ?: findFocusedEditableNode(root)
+        val nodeToShow = activeFocusedNode ?: findFocusedEditableNode(root)
+        val keyboardVisible = isKeyboardVisible()
 
-        Log.d("Wispr", "Visibility check: nodeToShow found: ${nodeToShow != null}, isEditable: ${nodeToShow?.isEditable == true}")
+        // Better Launcher/SystemUI/Game detection
+        val pkg = root?.packageName?.toString() ?: focusedAppPackage ?: ""
+        val isLauncherOrSystem = pkg.contains("launcher") || pkg.contains("trebuchet") || 
+                                pkg.contains("home") || pkg == "com.android.systemui" || 
+                                pkg == "android"
+        
+        // Games often have focusable roots but shouldn't show the bubble without a keyboard
+        val isGame = pkg.contains("pokemon") || pkg.contains("niantic") || 
+                     pkg.contains("unity") || pkg.contains("unreal") || pkg.contains("supercell")
 
-        if (nodeToShow != null && nodeToShow.isEditable) {
-            currentFocusedNode = nodeToShow
+        Log.d("Wispr", "Visibility check: pkg: $pkg, nodeToShow: ${nodeToShow != null}, keyboard: $keyboardVisible, isGame: $isGame")
+
+        // Logic: 
+        // 1. On Launcher, SystemUI or in Games: ONLY show if keyboard is actually visible.
+        // 2. In normal apps: Show if keyboard is visible OR an editable field is focused.
+        val shouldShow = if (isLauncherOrSystem || isGame) {
+            keyboardVisible
+        } else {
+            keyboardVisible || (nodeToShow != null && nodeToShow.isEditable)
+        }
+
+        if (shouldShow) {
+            currentFocusedNode = nodeToShow ?: activeFocusedNode ?: root
             showFloatingMic()
         } else {
-            // Check if root itself is editable (common in some apps)
-            if (root != null && root.isEditable) {
-                Log.d("Wispr", "Visibility check: Root is editable")
-                currentFocusedNode = root
-                showFloatingMic()
-            } else {
-                hideFloatingMic()
-            }
+            hideFloatingMic()
         }
     }
 
@@ -186,6 +201,19 @@ class WisprAccessibilityService : AccessibilityService() {
         // Priority 1: Properly focused and editable
         if (root.isEditable && (root.isFocused || root.isAccessibilityFocused)) return root
         
+        // Special case for apps like Spotify where search bars might not be strictly 'editable'
+        // but are focusable and intended for text input
+        if (root.isFocusable && (root.isFocused || root.isAccessibilityFocused)) {
+            val className = root.className?.toString() ?: ""
+            if (className.contains("EditText") || className.contains("TextField") || root.isEditable) {
+                return root
+            }
+            // Fallback for custom search bars
+            if (root.packageName == "com.spotify.music" && root.isVisibleToUser) {
+                return root
+            }
+        }
+        
         // Recursive search
         for (i in 0 until root.childCount) {
             val child = root.getChild(i)
@@ -193,7 +221,7 @@ class WisprAccessibilityService : AccessibilityService() {
             if (found != null) return found
         }
 
-        // Priority 2: Visible to user and editable (e.g. search fields that don't report focus correctly)
+        // Priority 2: Visible to user and editable
         if (root.isEditable && root.isVisibleToUser) return root
 
         return null
@@ -237,6 +265,9 @@ class WisprAccessibilityService : AccessibilityService() {
         val lastX = prefs.getInt("bubble_x", 100)
         val lastY = prefs.getInt("bubble_y", 500)
 
+        val displayMetrics = resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels
+        
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -247,8 +278,10 @@ class WisprAccessibilityService : AccessibilityService() {
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT
         ).apply {
-            gravity = Gravity.TOP or Gravity.START
-            x = lastX
+            // Set gravity based on which side it was last on
+            val isOnRight = lastX > screenWidth / 2
+            gravity = if (isOnRight) Gravity.TOP or Gravity.END else Gravity.TOP or Gravity.START
+            x = 0 // Always stick to the edge
             y = lastY
         }
 
@@ -296,21 +329,29 @@ class WisprAccessibilityService : AccessibilityService() {
                             val screenWidth = displayMetrics.widthPixels
                             val viewWidth = currentView.width
                             
-                            // Snap to nearest horizontal edge
-                            // We use the center of the bubble to decide the side
-                            if (layoutParams.x + viewWidth / 2 < screenWidth / 2) {
+                            // Determine side based on raw position
+                            if (event.rawX < screenWidth / 2) {
+                                // Left side
+                                layoutParams.gravity = Gravity.TOP or Gravity.START
                                 layoutParams.x = 0
                             } else {
-                                // Right side: screen width minus the bubble width
-                                layoutParams.x = screenWidth - viewWidth
+                                // Right side
+                                layoutParams.gravity = Gravity.TOP or Gravity.END
+                                layoutParams.x = 0
                             }
                             
                             windowManager.updateViewLayout(currentView, layoutParams)
 
-                            // Save position
+                            // Save position (always store as absolute X from left for consistency)
+                            val absoluteX = if (layoutParams.gravity and Gravity.END == Gravity.END) {
+                                screenWidth - viewWidth
+                            } else {
+                                0
+                            }
+
                             getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
                                 .edit()
-                                .putInt("bubble_x", layoutParams.x)
+                                .putInt("bubble_x", absoluteX)
                                 .putInt("bubble_y", layoutParams.y)
                                 .apply()
                         } else {
@@ -376,33 +417,37 @@ class WisprAccessibilityService : AccessibilityService() {
             
             // Expand UI with animation
             floatingView?.let { view ->
-                TransitionManager.beginDelayedTransition(view as ViewGroup)
+                val transition = android.transition.AutoTransition().apply {
+                    duration = 300
+                    interpolator = android.view.animation.AccelerateDecelerateInterpolator()
+                }
+                TransitionManager.beginDelayedTransition(view as ViewGroup, transition)
                 
-                // Determine direction based on side of screen
-                val displayMetrics = resources.displayMetrics
-                val screenWidth = displayMetrics.widthPixels
                 val container = view.findViewById<LinearLayout>(R.id.container)
-                val layoutParams = container.layoutParams as FrameLayout.LayoutParams
+                val wmParams = view.layoutParams as WindowManager.LayoutParams
                 
-                val currentX = (view.layoutParams as WindowManager.LayoutParams).x
-                if (currentX < screenWidth / 2) {
-                    // On left side, expand to the right
-                    container.orientation = LinearLayout.HORIZONTAL
-                    layoutParams.gravity = Gravity.START
-                } else {
-                    // On right side, expand to the left
-                    container.orientation = LinearLayout.HORIZONTAL
-                    layoutParams.gravity = Gravity.END
-                    
-                    // We need to reorder views so micIcon is on the right
+                // Determine direction based on gravity
+                if (wmParams.gravity and Gravity.END == Gravity.END) {
+                    // On right side, ensure buttons are to the left of the "anchor"
                     val mic = view.findViewById<View>(R.id.micIcon)
                     val expanded = view.findViewById<View>(R.id.expandedControls)
-                    container.removeView(mic)
-                    container.removeView(expanded)
-                    container.addView(expanded)
-                    container.addView(mic)
+                    if (container.indexOfChild(mic) < container.indexOfChild(expanded)) {
+                        container.removeView(mic)
+                        container.removeView(expanded)
+                        container.addView(expanded)
+                        container.addView(mic)
+                    }
+                } else {
+                    // On left side, ensure anchor is on the left
+                    val mic = view.findViewById<View>(R.id.micIcon)
+                    val expanded = view.findViewById<View>(R.id.expandedControls)
+                    if (container.indexOfChild(mic) > container.indexOfChild(expanded)) {
+                        container.removeView(mic)
+                        container.removeView(expanded)
+                        container.addView(mic)
+                        container.addView(expanded)
+                    }
                 }
-                container.layoutParams = layoutParams
             }
             micIcon?.visibility = View.GONE
             expandedControls?.visibility = View.VISIBLE
@@ -479,7 +524,11 @@ class WisprAccessibilityService : AccessibilityService() {
 
     private fun resetOverlayUI() {
         floatingView?.let { view ->
-            TransitionManager.beginDelayedTransition(view as ViewGroup)
+            val transition = android.transition.AutoTransition().apply {
+                duration = 300
+                interpolator = android.view.animation.AccelerateDecelerateInterpolator()
+            }
+            TransitionManager.beginDelayedTransition(view as ViewGroup, transition)
             
             // Reset view order if it was changed
             val container = view.findViewById<LinearLayout>(R.id.container)
@@ -491,11 +540,13 @@ class WisprAccessibilityService : AccessibilityService() {
                 container.addView(mic)
                 container.addView(expanded)
             }
+            
+            // Apply visibility changes within the same transition block
+            polishingProgress?.visibility = View.GONE
+            waveformAnim?.visibility = View.VISIBLE
+            expandedControls?.visibility = View.GONE
+            micIcon?.visibility = View.VISIBLE
         }
-        polishingProgress?.visibility = View.GONE
-        waveformAnim?.visibility = View.VISIBLE
-        expandedControls?.visibility = View.GONE
-        micIcon?.visibility = View.VISIBLE
         btnConfirm?.isEnabled = true
         btnCancel?.isEnabled = true
     }
@@ -531,17 +582,42 @@ class WisprAccessibilityService : AccessibilityService() {
     private fun injectText(polishedText: String) {
         val node = currentFocusedNode ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
         if (node != null) {
-            val existingText = node.text?.toString() ?: ""
-            val textToInject = if (existingText.isNotEmpty() && !existingText.endsWith(" ")) {
-                "$existingText $polishedText"
-            } else {
-                "$existingText$polishedText"
+            var existingText = node.text?.toString() ?: ""
+            val hintText = node.hintText?.toString() ?: ""
+            
+            // Fix for Gemini/Search Bars: If existing text is exactly the hint, ignore it
+            if (existingText == hintText) {
+                existingText = ""
+            }
+
+            val textToInject = when {
+                existingText.isEmpty() -> polishedText
+                
+                // Double newline after greetings (e.g. "Hallo Herr ...", "Sehr geehrte Damen und Herren,")
+                existingText.trim().endsWith(",") || 
+                existingText.trim().endsWith("!") ||
+                existingText.contains(Regex("(Hallo|Hi|Sehr geehrte|Moin|Servus).*", RegexOption.IGNORE_CASE)) && existingText.length < 50 -> {
+                    "$existingText\n\n$polishedText"
+                }
+                
+                !existingText.endsWith(" ") -> "$existingText $polishedText"
+                else -> "$existingText$polishedText"
             }
 
             val arguments = Bundle().apply {
                 putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, textToInject)
             }
-            node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            
+            val success = node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            
+            if (!success) {
+                // Fallback for apps that don't support ACTION_SET_TEXT
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("Wispr", textToInject)
+                clipboard.setPrimaryClip(clip)
+                node.performAction(AccessibilityNodeInfo.ACTION_PASTE)
+            }
+
             Toast.makeText(this, "Text eingefügt!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Kein aktives Textfeld gefunden!", Toast.LENGTH_LONG).show()

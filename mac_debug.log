@@ -735,3 +735,107 @@ Aktuell, wenn ich in Android etwas einspreche und automatisch einfügen lasse, w
 }, falling back to CGEvent
 [2026-07-09 19:19:30 +0000] Fallback to CGEvent paste simulation...
 [2026-07-09 19:19:30 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 19:56:45 +0000] Text copied to clipboard: Das macht die Animation beim Ein- und Ausfahren noch smoother. Aktuell ist es beim Einfahren sehr abgehackt und die Animation unvollständig. Und wenn sich der Toggle auf der linken Seite befindet, soll er nach rechts ausklappen, auf der rechten Seite nach links. Das funktioniert aktuell noch nicht, der fährt sich immer nach rechts aus.
+[2026-07-09 19:56:45 +0000] AXIsProcessTrusted: true
+[2026-07-09 19:56:45 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 19:56:45 +0000] Executing AppleScript paste...
+[2026-07-09 19:56:45 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 19:56:45 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 19:56:45 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 20:37:58 +0000] Text copied to clipboard: Anstelle dessen, dass ich den Hexadezimalcode für die Farben eingeben muss, will ich einen Color-Rater haben, wo ich dann die Farbe selbst bestimmen kann.
+[2026-07-09 20:37:58 +0000] AXIsProcessTrusted: true
+[2026-07-09 20:37:58 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 20:37:58 +0000] Executing AppleScript paste...
+[2026-07-09 20:37:58 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 20:37:58 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 20:37:59 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 20:38:08 +0000] Text copied to clipboard: Und bei Spotify wird mir immer noch nichts angezeigt. Hast du eine Idee, warum?
+[2026-07-09 20:38:08 +0000] AXIsProcessTrusted: true
+[2026-07-09 20:38:08 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 20:38:08 +0000] Executing AppleScript paste...
+[2026-07-09 20:38:08 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 20:38:08 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 20:38:08 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 20:38:09 +0000] Text copied to clipboard: Und bei Spotify wird mir immer noch nichts angezeigt. Hast du eine Idee, warum?
+[2026-07-09 20:38:09 +0000] AXIsProcessTrusted: true
+[2026-07-09 20:38:09 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 20:38:09 +0000] Executing AppleScript paste...
+[2026-07-09 20:38:09 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 20:38:09 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 20:38:09 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 20:54:33 +0000] Text copied to clipboard: Kann man nicht einfügen, dass immer, wenn das Keyboard ausgefahren ist, da es ja bestimmt irgendeine systemweite Flag gibt, dass dann auch das Floating-Ding ausfährt?
+[2026-07-09 20:54:34 +0000] AXIsProcessTrusted: true
+[2026-07-09 20:54:34 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 20:54:34 +0000] Executing AppleScript paste...
+[2026-07-09 20:54:34 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 20:54:34 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 20:54:34 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 20:56:22 +0000] Text copied to clipboard: Bilde eine Debug-Version.
+[2026-07-09 20:56:22 +0000] AXIsProcessTrusted: true
+[2026-07-09 20:56:22 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 20:56:22 +0000] Executing AppleScript paste...
+[2026-07-09 20:56:22 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 20:56:22 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 20:56:22 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 21:07:19 +0000] Text copied to clipboard: Besser, aber jetzt ist der Bubble immer zu sehen, auch auf dem Homescreen, obwohl ich nichts zu schreiben habe.
+[2026-07-09 21:07:19 +0000] AXIsProcessTrusted: true
+[2026-07-09 21:07:19 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 21:07:19 +0000] Executing AppleScript paste...
+[2026-07-09 21:07:19 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 21:07:19 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 21:07:19 +0000] CGEvent paste simulation posted successfully
+[2026-07-09 21:07:20 +0000] Text copied to clipboard: Besser, aber jetzt ist der Bubble immer zu sehen, auch auf dem Homescreen, obwohl ich nichts zu schreiben habe.
+[2026-07-09 21:07:20 +0000] AXIsProcessTrusted: true
+[2026-07-09 21:07:20 +0000] Frontmost Application: Android Studio (com.google.android.studio)
+[2026-07-09 21:07:20 +0000] Executing AppleScript paste...
+[2026-07-09 21:07:20 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-09 21:07:20 +0000] Fallback to CGEvent paste simulation...
+[2026-07-09 21:07:21 +0000] CGEvent paste simulation posted successfully

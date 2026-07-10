@@ -21,6 +21,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import android.view.View
+import android.graphics.Color
+import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog
+import com.github.dhaval2404.colorpicker.model.ColorShape
+import android.content.res.ColorStateList
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +37,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var colorActionInput: EditText
     private lateinit var colorIconInput: EditText
     private lateinit var saveColorsButton: Button
+    
+    private lateinit var colorBackgroundPreview: View
+    private lateinit var colorActionPreview: View
+    private lateinit var colorIconPreview: View
+    private lateinit var btnPickBackgroundColor: Button
+    private lateinit var btnPickActionColor: Button
+    private lateinit var btnPickIconColor: Button
+
     private lateinit var masterEnabledSwitch: com.google.android.material.switchmaterial.SwitchMaterial
     private lateinit var btnAccessibility: Button
     private lateinit var btnOverlay: Button
@@ -56,6 +69,14 @@ class MainActivity : AppCompatActivity() {
         colorActionInput = findViewById(R.id.colorActionInput)
         colorIconInput = findViewById(R.id.colorIconInput)
         saveColorsButton = findViewById(R.id.saveColorsButton)
+        
+        colorBackgroundPreview = findViewById(R.id.colorBackgroundPreview)
+        colorActionPreview = findViewById(R.id.colorActionPreview)
+        colorIconPreview = findViewById(R.id.colorIconPreview)
+        btnPickBackgroundColor = findViewById(R.id.btnPickBackgroundColor)
+        btnPickActionColor = findViewById(R.id.btnPickActionColor)
+        btnPickIconColor = findViewById(R.id.btnPickIconColor)
+
         masterEnabledSwitch = findViewById(R.id.masterEnabledSwitch)
         btnAccessibility = findViewById(R.id.btnAccessibility)
         btnOverlay = findViewById(R.id.btnOverlay)
@@ -87,9 +108,25 @@ class MainActivity : AppCompatActivity() {
         val isMasterEnabled = prefs.getBoolean("master_enabled", true)
         masterEnabledSwitch.isChecked = isMasterEnabled
 
-        colorBackgroundInput.setText(prefs.getString("color_bg", "#F5F3FF"))
-        colorActionInput.setText(prefs.getString("color_action", "#6366F1"))
-        colorIconInput.setText(prefs.getString("color_icon", "#4F46E5"))
+        val bgHex = prefs.getString("color_bg", "#F5F3FF")!!
+        val actionHex = prefs.getString("color_action", "#6366F1")!!
+        val iconHex = prefs.getString("color_icon", "#4F46E5")!!
+
+        colorBackgroundInput.setText(bgHex)
+        colorActionInput.setText(actionHex)
+        colorIconInput.setText(iconHex)
+        
+        updateColorPreviews(bgHex, actionHex, iconHex)
+    }
+
+    private fun updateColorPreviews(bg: String, action: String, icon: String) {
+        try {
+            colorBackgroundPreview.backgroundTintList = ColorStateList.valueOf(Color.parseColor(bg))
+            colorActionPreview.backgroundTintList = ColorStateList.valueOf(Color.parseColor(action))
+            colorIconPreview.backgroundTintList = ColorStateList.valueOf(Color.parseColor(icon))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setupListeners() {
@@ -119,17 +156,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         saveColorsButton.setOnClickListener {
-            val bg = colorBackgroundInput.text.toString().trim()
-            val action = colorActionInput.text.toString().trim()
-            val icon = colorIconInput.text.toString().trim()
-            
-            getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
-                .edit()
-                .putString("color_bg", bg)
-                .putString("color_action", action)
-                .putString("color_icon", icon)
-                .apply()
-            Toast.makeText(this, "Farben gespeichert!", Toast.LENGTH_SHORT).show()
+            saveColors()
+        }
+
+        btnPickBackgroundColor.setOnClickListener {
+            showColorPicker(colorBackgroundInput)
+        }
+
+        btnPickActionColor.setOnClickListener {
+            showColorPicker(colorActionInput)
+        }
+
+        btnPickIconColor.setOnClickListener {
+            showColorPicker(colorIconInput)
         }
 
         btnAccessibility.setOnClickListener {
@@ -166,6 +205,41 @@ class MainActivity : AppCompatActivity() {
             historyManager.clearHistory()
             updateHistoryUI()
         }
+    }
+
+    private fun showColorPicker(input: EditText) {
+        val currentColor = try {
+            Color.parseColor(input.text.toString())
+        } catch (e: Exception) {
+            Color.BLUE
+        }
+
+        MaterialColorPickerDialog
+            .Builder(this)
+            .setTitle("Farbe wählen")
+            .setColorShape(ColorShape.CIRCLE)
+            .setDefaultColor(currentColor)
+            .setColorListener { color, colorHex ->
+                input.setText(colorHex)
+                saveColors()
+            }
+            .show()
+    }
+
+    private fun saveColors() {
+        val bg = colorBackgroundInput.text.toString().trim()
+        val action = colorActionInput.text.toString().trim()
+        val icon = colorIconInput.text.toString().trim()
+        
+        getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
+            .edit()
+            .putString("color_bg", bg)
+            .putString("color_action", action)
+            .putString("color_icon", icon)
+            .apply()
+        
+        updateColorPreviews(bg, action, icon)
+        Toast.makeText(this, "Farben aktualisiert!", Toast.LENGTH_SHORT).show()
     }
 
     private fun updateStatusIndicators() {
