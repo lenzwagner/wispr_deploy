@@ -159,6 +159,8 @@ class MainActivity : AppCompatActivity() {
             saveColors()
         }
 
+        saveColorsButton.visibility = View.VISIBLE
+
         btnPickBackgroundColor.setOnClickListener {
             showColorPicker(colorBackgroundInput)
         }
@@ -219,7 +221,7 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Farbe wählen")
             .setColorShape(ColorShape.CIRCLE)
             .setDefaultColor(currentColor)
-            .setColorListener { color, colorHex ->
+            .setColorListener { _, colorHex ->
                 input.setText(colorHex)
                 saveColors()
             }

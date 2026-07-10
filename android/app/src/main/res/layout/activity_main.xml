@@ -154,136 +154,173 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Erscheinungsbild"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
                     <!-- Background Color Picker -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center_vertical">
-                        <View
-                            android:id="@+id/colorBackgroundPreview"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_white"
-                            android:backgroundTint="#F5F3FF" />
-                        <TextView
-                            android:layout_width="0dp"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:text="Hintergrund"
-                            android:textColor="@color/text_primary" />
-                        <Button
-                            android:id="@+id/btnPickBackgroundColor"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <View
+                                android:id="@+id/colorBackgroundPreview"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/circle_white"
+                                android:backgroundTint="#F5F3FF" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:text="Hintergrund"
+                                android:textColor="@color/text_primary" />
+                            <Button
+                                android:id="@+id/btnPickBackgroundColor"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wählen"
+                                android:textColor="@color/primary" />
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Wählen"
-                            android:textColor="@color/primary" />
+                            android:layout_marginTop="4dp"
+                            app:hintEnabled="false"
+                            app:boxStrokeColor="@color/primary">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/colorBackgroundInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:padding="8dp"
+                                android:hint="#Hexadezimal"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <!-- Action Color Picker -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical">
-                        <View
-                            android:id="@+id/colorActionPreview"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_white"
-                            android:backgroundTint="#6366F1" />
-                        <TextView
-                            android:layout_width="0dp"
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:text="Bestätigen-Button"
-                            android:textColor="@color/text_primary" />
-                        <Button
-                            android:id="@+id/btnPickActionColor"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <View
+                                android:id="@+id/colorActionPreview"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/circle_white"
+                                android:backgroundTint="#6366F1" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:text="Bestätigen-Button"
+                                android:textColor="@color/text_primary" />
+                            <Button
+                                android:id="@+id/btnPickActionColor"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wählen"
+                                android:textColor="@color/primary" />
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Wählen"
-                            android:textColor="@color/primary" />
+                            android:layout_marginTop="4dp"
+                            app:hintEnabled="false"
+                            app:boxStrokeColor="@color/primary">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/colorActionInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:padding="8dp"
+                                android:hint="#Hexadezimal"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <!-- Icon Color Picker -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical">
-                        <View
-                            android:id="@+id/colorIconPreview"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_white"
-                            android:backgroundTint="#4F46E5" />
-                        <TextView
-                            android:layout_width="0dp"
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:text="Symbole"
-                            android:textColor="@color/text_primary" />
-                        <Button
-                            android:id="@+id/btnPickIconColor"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <View
+                                android:id="@+id/colorIconPreview"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/circle_white"
+                                android:backgroundTint="#4F46E5" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:text="Symbole"
+                                android:textColor="@color/text_primary" />
+                            <Button
+                                android:id="@+id/btnPickIconColor"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wählen"
+                                android:textColor="@color/primary" />
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Wählen"
-                            android:textColor="@color/primary" />
+                            android:layout_marginTop="4dp"
+                            app:hintEnabled="false"
+                            app:boxStrokeColor="@color/primary">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/colorIconInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:padding="8dp"
+                                android:hint="#Hexadezimal"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
-                    <!-- Hidden fields to keep compatibility with existing save logic if needed,
-                         or we just update the Kotlin code -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:visibility="gone">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/colorBackgroundInput"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:visibility="gone">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/colorActionInput"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:visibility="gone">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/colorIconInput"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                    <!-- Keep Save Button but hidden if you want auto-save on change -->
                     <Button
                         android:id="@+id/saveColorsButton"
-                        android:visibility="gone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Farben Speichern"
+                        android:backgroundTint="@color/primary" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

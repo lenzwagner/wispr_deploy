@@ -29,6 +29,51 @@ class TranscribeResponse(BaseModel):
     polished_text: str
     app_name: Optional[str] = None
 
+# --- CONFIGURATION (MODELS & KEYS) ---
+groq_api_key = os.environ.get("GROQ_API_KEY")
+openai_api_key = os.environ.get("OPENAI_API_KEY")
+anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY")
+nvidia_api_key = os.environ.get("NVIDIA_API_KEY")
+
+# Model configurations with default fallbacks
+GROQ_LLM_MODEL = os.environ.get("GROQ_LLM_MODEL", "llama-3.3-70b-versatile")
+OPENAI_LLM_MODEL = os.environ.get("OPENAI_LLM_MODEL", "gpt-4o-mini")
+ANTHROPIC_LLM_MODEL = os.environ.get("ANTHROPIC_LLM_MODEL", "claude-3-5-haiku-20241022")
+NVIDIA_LLM_MODEL = os.environ.get("NVIDIA_LLM_MODEL", "meta/llama-3.3-70b-instruct")
+
+GROQ_WHISPER_MODEL = os.environ.get("GROQ_WHISPER_MODEL", "whisper-large-v3")
+NVIDIA_WHISPER_MODEL = os.environ.get("NVIDIA_WHISPER_MODEL", "openai/whisper-large-v3")
+OPENAI_WHISPER_MODEL = os.environ.get("OPENAI_WHISPER_MODEL", "whisper-1")
+
+# Instantiate global clients (only if keys are present) to enable connection reuse
+groq_client = None
+if groq_api_key:
+    try:
+        groq_client = OpenAI(api_key=groq_api_key, base_url="https://api.groq.com/openai/v1")
+    except Exception as e:
+        print(f"Error initializing Groq client: {e}")
+
+openai_client = None
+if openai_api_key:
+    try:
+        openai_client = OpenAI(api_key=openai_api_key)
+    except Exception as e:
+        print(f"Error initializing OpenAI client: {e}")
+
+anthropic_client = None
+if anthropic_api_key:
+    try:
+        anthropic_client = Anthropic(api_key=anthropic_api_key)
+    except Exception as e:
+        print(f"Error initializing Anthropic client: {e}")
+
+nvidia_client = None
+if nvidia_api_key:
+    try:
+        nvidia_client = OpenAI(api_key=nvidia_api_key, base_url="https://integrate.api.nvidia.com/v1")
+    except Exception as e:
+        print(f"Error initializing NVIDIA client: {e}")
+
 # --- PROMPTS & REGEX ---
 
 # System prompt with Markdown strictness and Few-Shot Examples
@@ -74,36 +119,62 @@ def get_app_specific_prompt(app_name: Optional[str]) -> str:
     
     app_lower = app_name.lower()
     
-    # Slack, MS Teams, Discord, etc.
-    if any(x in app_lower for x in ["slack", "teams", "discord", "chat"]):
+    # 1. Entwickler-Tools & Terminals (VS Code, Cursor, Xcode, Android Studio, Terminal, Git)
+    if any(x in app_lower for x in ["terminal", "iterm", "xcode", "studio", "vscode", "visual studio", "cursor", "intellij", "pycharm", "idea", "sublime", "git", "github"]):
+        style_instruction = """
+\nKONTEXT: Der Nutzer diktiert in einem Programmier-Editor, Terminal oder Entwickler-Tool.
+REGELN FÜR DIESEN KONTEXT:
+- Halte die Formatierung absolut minimalistisch.
+- Verwende KEINE automatischen Markdown-Auszeichnungen wie fett (**), kursiv (*) oder Überschriften (#), es sei denn, der Nutzer verlangt dies explizit.
+- Schreibe Variablen, Funktionsnamen oder Befehle exakt so, wie sie für Programmierer typisch sind (z.B. camelCase, snake_case, kebab-case oder CLI-Argumente).
+- Füge niemals automatische Begrüßungen oder Signaturen hinzu.
+"""
+    
+    # 2. Browser & Suchleisten (Chrome, Safari, Firefox, Edge, Opera, Search)
+    elif any(x in app_lower for x in ["chrome", "safari", "firefox", "edge", "opera", "browser", "search", "spotify"]):
+        style_instruction = """
+\nKONTEXT: Der Nutzer diktiert in einem Web-Browser, einer Suchleiste oder einem einfachen Eingabefeld.
+REGELN FÜR DIESEN KONTEXT:
+- Formatiere den Text extrem flach und kompakt in einer einzigen Zeile oder einfachen Sätzen.
+- Nutze ZWINGEND KEIN Markdown (keine Bindestriche für Listen, kein fettgedruckter Text, keine Überschriften). In Suchfeldern wird Markdown nicht gerendert und wirkt störend.
+- Vermeide Zeilenumbrüche, es sei denn, sie wurden explizit diktiert.
+"""
+
+    # 3. Slack, MS Teams, Discord, Mattermost, Skype (Business-Chat)
+    elif any(x in app_lower for x in ["slack", "teams", "discord", "chat", "mattermost", "skype", "webex"]):
         style_instruction = """
 \nKONTEXT: Der Nutzer diktiert eine Nachricht für einen Business-Chat (z.B. Slack/Teams).
 REGELN FÜR DIESEN KONTEXT:
-- Halte die Struktur klar und übersichtlich.
+- Halte die Struktur klar, übersichtlich und empfängerfreundlich.
 - Nutze Absätze (\n\n) bei Themenwechseln.
-- Wenn eine Grußformel existiert, setze sie in eine neue Zeile.
+- Wenn eine Grußformel oder Anrede existiert, setze sie in eine neue Zeile.
+- Markdown-Listen (- ) sind bei Aufzählungen erwünscht.
 """
-    # WhatsApp, Signal, iMessage, etc.
-    elif any(x in app_lower for x in ["whatsapp", "signal", "telegram", "message", "imessage"]):
+
+    # 4. WhatsApp, Signal, Telegram, iMessage/Messages, Facebook Messenger (Private Chats)
+    elif any(x in app_lower for x in ["whatsapp", "signal", "telegram", "message", "imessage", "messenger", "orca", "securesms", "messaging", "sms"]):
         style_instruction = """
-\nKONTEXT: Der Nutzer diktiert eine private Chat-Nachricht.
+\nKONTEXT: Der Nutzer diktiert eine private Chat-Nachricht (z.B. WhatsApp/Signal).
 REGELN FÜR DIESEN KONTEXT:
-- Behalte den lockeren, natürlichen Charakter bei.
-- Nutze Emojis nur, wenn der Nutzer sie explizit diktiert (z.B. "Smiley").
+- Behalte den lockeren, informellen und natürlichen Charakter des Sprechers bei.
+- Nutze Emojis nur, wenn der Nutzer sie explizit diktiert (z.B. "Smiley", "Zwinker-Smiley").
+- Keine übermäßige formelle Strukturierung (z.B. keine starren E-Mail-Strukturen).
 """
-    # Mail apps, Outlook, Notes, text editors
-    elif any(x in app_lower for x in ["mail", "outlook", "gmail", "notes", "word", "textedit", "pages"]):
+
+    # 5. Mail-Apps & Dokumenten-Editoren (Gmail/GM, Outlook, Mail, Notes, Word, Pages, Docs, Keep)
+    elif any(x in app_lower for x in ["mail", "outlook", "gmail", "notes", "word", "textedit", "pages", "keep", "docs", "document", "editor", "gm", "evernote"]):
         style_instruction = """
-\nKONTEXT: Der Nutzer diktiert eine E-Mail oder ein Dokument. 
-WENDE ZWINGEND DIESE E-MAIL-FORMATIERUNGSREGELN AN:
+\nKONTEXT: Der Nutzer diktiert eine E-Mail oder ein offizielles Dokument. 
+WENDE ZWINGEND DIESE DOKUMENT- UND E-MAIL-FORMATIERUNGSREGELN AN:
 - Setze die Anrede (z.B. "Hallo Herr X,", "Sehr geehrte Frau Y,") IMMER in eine eigene Zeile, gefolgt von einer leeren Zeile (Doppelabsatz / \n\n).
 - Der erste Satz nach der Anrede beginnt im Deutschen zwingend kleingeschrieben (außer das erste Wort ist ein Nomen).
 - Setze die Grußformel am Ende (z.B. "Mit freundlichen Grüßen", "Liebe Grüße", "Viele Grüße") IMMER in eine eigene Zeile, mit einer leeren Zeile davor (\n\n).
 - Wenn nach der Grußformel ein Name diktiert wird, setze diesen direkt in die nächste Zeile darunter (\n).
 - Formatiere Aufzählungen in Mail-Texten immer sauber als Markdown mit Bullet-Points (- ).
 """
+    
     else:
-        style_instruction = f"\nKONTEXT: Der Nutzer diktiert in der App '{app_name}'. Passe die Formatierung an die typischen Konventionen dieser App an."
+        style_instruction = f"\nKONTEXT: Der Nutzer diktiert in der App '{app_name}'. Passe die Formatierung an die typischen Konventionen dieser App an (z.B. flacher Text für Suchen, strukturierter Text für Dokumente)."
         
     return BASE_SYSTEM_PROMPT + style_instruction
 
@@ -140,23 +211,20 @@ def health_check():
     return {
         "status": "healthy",
         "providers": {
-            "groq": "GROQ_API_KEY" in os.environ,
-            "openai": "OPENAI_API_KEY" in os.environ,
-            "anthropic": "ANTHROPIC_API_KEY" in os.environ,
-            "nvidia": "NVIDIA_API_KEY" in os.environ
+            "groq": groq_api_key is not None,
+            "openai": openai_api_key is not None,
+            "anthropic": anthropic_api_key is not None,
+            "nvidia": nvidia_api_key is not None
         }
     }
 
+# Declared as synchronous (def) so FastAPI executes it in an external thread pool,
+# preventing blocking of the main async event loop during disk/network I/O.
 @app.post("/transcribe", response_model=TranscribeResponse)
-async def transcribe_audio(
+def transcribe_audio(
     file: UploadFile = File(...),
     app_name: Optional[str] = Form(None)
 ):
-    groq_api_key = os.environ.get("GROQ_API_KEY")
-    openai_api_key = os.environ.get("OPENAI_API_KEY")
-    anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY")
-    nvidia_api_key = os.environ.get("NVIDIA_API_KEY")
-
     print("--- Transcribe Request ---")
     print(f"Detected Keys: GROQ_API_KEY={'set' if groq_api_key else 'MISSING'}, NVIDIA_API_KEY={'set' if nvidia_api_key else 'MISSING'}, OPENAI_API_KEY={'set' if openai_api_key else 'MISSING'}, ANTHROPIC_API_KEY={'set' if anthropic_api_key else 'MISSING'}")
 
@@ -175,40 +243,36 @@ async def transcribe_audio(
         raw_text = ""
         
         # 1. Transcribe Audio
-        if groq_api_key and not raw_text:
+        if groq_client and not raw_text:
             try:
                 print("Attempting Groq transcription...")
-                groq_client = OpenAI(api_key=groq_api_key, base_url="https://api.groq.com/openai/v1")
                 with open(temp_audio_path, "rb") as audio_file:
                     translation = groq_client.audio.transcriptions.create(
-                        model="whisper-large-v3",
+                        model=GROQ_WHISPER_MODEL,
                         file=audio_file
                     )
                     raw_text = translation.text
             except Exception as e:
                 print(f"Groq transcription failed: {e}")
 
-        if nvidia_api_key and not raw_text:
+        if nvidia_client and not raw_text:
             try:
                 print("Attempting NVIDIA transcription...")
-                nvidia_client = OpenAI(api_key=nvidia_api_key, base_url="https://integrate.api.nvidia.com/v1")
-                model_name = os.environ.get("NVIDIA_WHISPER_MODEL", "openai/whisper-large-v3")
                 with open(temp_audio_path, "rb") as audio_file:
                     translation = nvidia_client.audio.transcriptions.create(
-                        model=model_name,
+                        model=NVIDIA_WHISPER_MODEL,
                         file=audio_file
                     )
                     raw_text = translation.text
             except Exception as e:
                 print(f"NVIDIA transcription failed: {e}")
 
-        if openai_api_key and not raw_text:
+        if openai_client and not raw_text:
             try:
                 print("Attempting OpenAI transcription...")
-                openai_client = OpenAI(api_key=openai_api_key)
                 with open(temp_audio_path, "rb") as audio_file:
                     translation = openai_client.audio.transcriptions.create(
-                        model="whisper-1",
+                        model=OPENAI_WHISPER_MODEL,
                         file=audio_file
                     )
                     raw_text = translation.text
@@ -225,11 +289,10 @@ async def transcribe_audio(
         polished_text = ""
         system_prompt = get_app_specific_prompt(app_name)
 
-        if anthropic_api_key:
+        if anthropic_client:
             try:
-                anthropic_client = Anthropic(api_key=anthropic_api_key)
                 message = anthropic_client.messages.create(
-                    model="claude-3-5-haiku-20241022",
+                    model=ANTHROPIC_LLM_MODEL,
                     max_tokens=1024,
                     temperature=0.0,
                     system=system_prompt,
@@ -241,11 +304,10 @@ async def transcribe_audio(
             except Exception as e:
                 print(f"Anthropic polishing failed: {e}")
 
-        if not polished_text and openai_api_key:
+        if not polished_text and openai_client:
             try:
-                openai_client = OpenAI(api_key=openai_api_key)
                 completion = openai_client.chat.completions.create(
-                    model="gpt-4o-mini",
+                    model=OPENAI_LLM_MODEL,
                     messages=[
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"}
@@ -256,14 +318,12 @@ async def transcribe_audio(
             except Exception as e:
                 print(f"OpenAI polishing failed: {e}")
 
-        if not polished_text and nvidia_api_key:
+        if not polished_text and nvidia_client:
             try:
-                nvidia_client = OpenAI(api_key=nvidia_api_key, base_url="https://integrate.api.nvidia.com/v1")
-                model_name = os.environ.get("NVIDIA_LLM_MODEL", "meta/llama-3.3-70b-instruct")
-                extra_args = {"extra_body": {"chat_template_kwargs": {"thinking": False}}} if "deepseek" in model_name.lower() else {}
+                extra_args = {"extra_body": {"chat_template_kwargs": {"thinking": False}}} if "deepseek" in NVIDIA_LLM_MODEL.lower() else {}
                 
                 completion = nvidia_client.chat.completions.create(
-                    model=model_name,
+                    model=NVIDIA_LLM_MODEL,
                     messages=[
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"}
@@ -275,11 +335,10 @@ async def transcribe_audio(
             except Exception as e:
                 print(f"NVIDIA polishing failed: {e}")
 
-        if not polished_text and groq_api_key:
+        if not polished_text and groq_client:
             try:
-                groq_client = OpenAI(api_key=groq_api_key, base_url="https://api.groq.com/openai/v1")
                 completion = groq_client.chat.completions.create(
-                    model="llama-3.3-70b-versatile",
+                    model=GROQ_LLM_MODEL,
                     messages=[
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"}
