@@ -23,7 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.view.View
 import android.graphics.Color
-import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog
+import com.github.dhaval2404.colorpicker.ColorPickerDialog
 import com.github.dhaval2404.colorpicker.model.ColorShape
 import android.content.res.ColorStateList
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPickActionColor: Button
     private lateinit var btnPickIconColor: Button
 
-    private lateinit var masterEnabledSwitch: com.google.android.material.switchmaterial.SwitchMaterial
+    private lateinit var masterEnabledSwitch: com.google.android.material.materialswitch.MaterialSwitch
     private lateinit var btnAccessibility: Button
     private lateinit var btnOverlay: Button
     private lateinit var btnAudioPermission: Button
@@ -107,9 +107,10 @@ class MainActivity : AppCompatActivity() {
         
         val isMasterEnabled = prefs.getBoolean("master_enabled", true)
         masterEnabledSwitch.isChecked = isMasterEnabled
-
-        val bgHex = prefs.getString("color_bg", "#F5F3FF")!!
-        val actionHex = prefs.getString("color_action", "#6366F1")!!
+        
+        // Color Previews setup with M3 defaults if no prefs found
+        val bgHex = prefs.getString("color_bg", "#F1F5F9")!! // Slate 100
+        val actionHex = prefs.getString("color_action", "#4F46E5")!! // Indigo 600
         val iconHex = prefs.getString("color_icon", "#4F46E5")!!
 
         colorBackgroundInput.setText(bgHex)
@@ -216,7 +217,7 @@ class MainActivity : AppCompatActivity() {
             Color.BLUE
         }
 
-        MaterialColorPickerDialog
+        ColorPickerDialog
             .Builder(this)
             .setTitle("Farbe wählen")
             .setColorShape(ColorShape.CIRCLE)

@@ -34,6 +34,9 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
+import android.animation.ValueAnimator
+import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
 import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.CoroutineScope
@@ -69,6 +72,17 @@ class WisprAccessibilityService : AccessibilityService() {
     private var mediaRecorder: MediaRecorder? = null
     private var audioFile: File? = null
     private var isRecording = false
+    
+    private val amplitudeHandler = Handler(Looper.getMainLooper())
+    private val amplitudeRunnable = object : Runnable {
+        override fun run() {
+            if (isRecording) {
+                val amplitude = mediaRecorder?.maxAmplitude ?: 0
+                updateWaveformScale(amplitude)
+                amplitudeHandler.postDelayed(this, 100)
+            }
+        }
+    }
 
     private val httpClient = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -174,17 +188,23 @@ class WisprAccessibilityService : AccessibilityService() {
 
     private fun updateFloatingMicAppearance() {
         val prefs = getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
-        val bgColor = parseColorSafely(prefs.getString("color_bg", "#F5F3FF"), Color.parseColor("#F5F3FF"))
-        val actionColor = parseColorSafely(prefs.getString("color_action", "#6366F1"), Color.parseColor("#6366F1"))
-        val iconColor = parseColorSafely(prefs.getString("color_icon", "#4F46E5"), Color.parseColor("#4F46E5"))
-
-        micCard?.setCardBackgroundColor(android.content.res.ColorStateList.valueOf(bgColor))
-        btnConfirm?.backgroundTintList = android.content.res.ColorStateList.valueOf(actionColor)
         
-        micIcon?.setColorFilter(iconColor)
-        (btnCancel as? ImageView)?.setColorFilter(iconColor)
-        waveformAnim?.setColorFilter(iconColor)
-        polishingProgress?.indeterminateTintList = android.content.res.ColorStateList.valueOf(iconColor)
+        // Fallback to M3 Surface/Primary colors if nothing set
+        val bgColor = parseColorSafely(prefs.getString("color_bg", null), 0)
+        val actionColor = parseColorSafely(prefs.getString("color_action", null), 0)
+        val iconColor = parseColorSafely(prefs.getString("color_icon", null), 0)
+
+        if (bgColor != 0) micCard?.setCardBackgroundColor(android.content.res.ColorStateList.valueOf(bgColor))
+        if (actionColor != 0) {
+            btnConfirm?.backgroundTintList = android.content.res.ColorStateList.valueOf(actionColor)
+            recordingPulse?.backgroundTintList = android.content.res.ColorStateList.valueOf(actionColor)
+        }
+        
+        if (iconColor != 0) {
+            micIcon?.setColorFilter(iconColor)
+            waveformAnim?.setColorFilter(iconColor)
+            polishingProgress?.indeterminateTintList = android.content.res.ColorStateList.valueOf(iconColor)
+        }
     }
 
     private fun parseColorSafely(hex: String?, fallback: Int): Int {
@@ -415,52 +435,30 @@ class WisprAccessibilityService : AccessibilityService() {
 
             isRecording = true
             
-            // Expand UI with animation
-            floatingView?.let { view ->
-                val transition = android.transition.AutoTransition().apply {
-                    duration = 300
-                    interpolator = android.view.animation.AccelerateDecelerateInterpolator()
-                }
-                TransitionManager.beginDelayedTransition(view as ViewGroup, transition)
-                
-                val container = view.findViewById<LinearLayout>(R.id.container)
-                val wmParams = view.layoutParams as WindowManager.LayoutParams
-                
-                // Determine direction based on gravity
-                if (wmParams.gravity and Gravity.END == Gravity.END) {
-                    // On right side, ensure buttons are to the left of the "anchor"
-                    val mic = view.findViewById<View>(R.id.micIcon)
-                    val expanded = view.findViewById<View>(R.id.expandedControls)
-                    if (container.indexOfChild(mic) < container.indexOfChild(expanded)) {
-                        container.removeView(mic)
-                        container.removeView(expanded)
-                        container.addView(expanded)
-                        container.addView(mic)
-                    }
-                } else {
-                    // On left side, ensure anchor is on the left
-                    val mic = view.findViewById<View>(R.id.micIcon)
-                    val expanded = view.findViewById<View>(R.id.expandedControls)
-                    if (container.indexOfChild(mic) > container.indexOfChild(expanded)) {
-                        container.removeView(mic)
-                        container.removeView(expanded)
-                        container.addView(mic)
-                        container.addView(expanded)
-                    }
-                }
-            }
-            micIcon?.visibility = View.GONE
-            expandedControls?.visibility = View.VISIBLE
+            // Smooth expand animation
+            animateOverlay(expand = true)
             
-            recordingPulse?.visibility = View.VISIBLE
-            val alphaAnim = AlphaAnimation(0.0f, 0.4f).apply {
-                duration = 800
-                repeatCount = Animation.INFINITE
-                repeatMode = Animation.REVERSE
-            }
-            recordingPulse?.startAnimation(alphaAnim)
+            // Start amplitude tracking
+            amplitudeHandler.post(amplitudeRunnable)
 
-            Toast.makeText(this, "🎙️ Aufnahme gestartet...", Toast.LENGTH_SHORT).show()
+            recordingPulse?.visibility = View.VISIBLE
+            val pulseAnim = android.view.animation.AnimationSet(false).apply {
+                addAnimation(android.view.animation.AlphaAnimation(0.15f, 0.85f).apply {
+                    duration = 500
+                    repeatCount = android.view.animation.Animation.INFINITE
+                    repeatMode = android.view.animation.Animation.REVERSE
+                })
+                addAnimation(android.view.animation.ScaleAnimation(
+                    0.85f, 1.15f, 0.85f, 1.15f,
+                    android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
+                    android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
+                ).apply {
+                    duration = 500
+                    repeatCount = android.view.animation.Animation.INFINITE
+                    repeatMode = android.view.animation.Animation.REVERSE
+                })
+            }
+            recordingPulse?.startAnimation(pulseAnim)
         } catch (e: Exception) {
             Toast.makeText(this, "Fehler beim Starten der Aufnahme: ${e.message}", Toast.LENGTH_LONG).show()
             e.printStackTrace()
@@ -469,8 +467,55 @@ class WisprAccessibilityService : AccessibilityService() {
         }
     }
 
+    private fun animateOverlay(expand: Boolean) {
+        val view = floatingView ?: return
+        val mic = micIcon ?: return
+        val expanded = expandedControls ?: return
+        val container = view.findViewById<LinearLayout>(R.id.container) ?: return
+        val wmParams = view.layoutParams as WindowManager.LayoutParams
+
+        // Use TransitionManager for smooth, non-laggy animation
+        android.transition.TransitionManager.beginDelayedTransition(micCard,
+            android.transition.AutoTransition().setDuration(250))
+
+        // 1. Prepare view order based on gravity
+        val isOnRight = (wmParams.gravity and Gravity.END) == Gravity.END
+        if (expand) {
+            if (isOnRight) {
+                if (container.indexOfChild(mic) < container.indexOfChild(expanded)) {
+                    container.removeView(mic)
+                    container.removeView(expanded)
+                    container.addView(expanded)
+                    container.addView(mic)
+                }
+            } else {
+                if (container.indexOfChild(mic) > container.indexOfChild(expanded)) {
+                    container.removeView(mic)
+                    container.removeView(expanded)
+                    container.addView(mic)
+                    container.addView(expanded)
+                }
+            }
+        }
+
+        // 2. Toggle visibility
+        if (expand) {
+            mic.visibility = View.GONE
+            expanded.visibility = View.VISIBLE
+            expanded.alpha = 1f
+        } else {
+            expanded.visibility = View.GONE
+            mic.visibility = View.VISIBLE
+            mic.alpha = 1f
+        }
+    }
+
     private fun stopRecording() {
         if (isRecording) {
+            isRecording = false
+            amplitudeHandler.removeCallbacks(amplitudeRunnable)
+            resetWaveformScale()
+            
             try {
                 mediaRecorder?.stop()
                 mediaRecorder?.release()
@@ -478,10 +523,26 @@ class WisprAccessibilityService : AccessibilityService() {
                 // ignore
             }
             mediaRecorder = null
-            isRecording = false
             recordingPulse?.clearAnimation()
             recordingPulse?.visibility = View.GONE
         }
+    }
+
+    private fun updateWaveformScale(amplitude: Int) {
+        // Amplitude is typically 0-32767. 
+        // We want a subtle but visible scale between 1.0 and 1.6
+        val normalized = (amplitude.toFloat() / 32767f).coerceIn(0f, 1f)
+        val scale = 1.0f + (normalized * 0.6f)
+        
+        waveformAnim?.animate()
+            ?.scaleX(scale)
+            ?.scaleY(scale)
+            ?.setDuration(100)
+            ?.start()
+    }
+
+    private fun resetWaveformScale() {
+        waveformAnim?.animate()?.scaleX(1f)?.scaleY(1f)?.setDuration(200)?.start()
     }
 
     private fun stopRecordingAndProcess() {
@@ -523,32 +584,15 @@ class WisprAccessibilityService : AccessibilityService() {
     }
 
     private fun resetOverlayUI() {
-        floatingView?.let { view ->
-            val transition = android.transition.AutoTransition().apply {
-                duration = 300
-                interpolator = android.view.animation.AccelerateDecelerateInterpolator()
-            }
-            TransitionManager.beginDelayedTransition(view as ViewGroup, transition)
-            
-            // Reset view order if it was changed
-            val container = view.findViewById<LinearLayout>(R.id.container)
-            val mic = view.findViewById<View>(R.id.micIcon)
-            val expanded = view.findViewById<View>(R.id.expandedControls)
-            if (container.indexOfChild(mic) > container.indexOfChild(expanded)) {
-                container.removeView(mic)
-                container.removeView(expanded)
-                container.addView(mic)
-                container.addView(expanded)
-            }
-            
-            // Apply visibility changes within the same transition block
-            polishingProgress?.visibility = View.GONE
-            waveformAnim?.visibility = View.VISIBLE
-            expandedControls?.visibility = View.GONE
-            micIcon?.visibility = View.VISIBLE
-        }
+        animateOverlay(expand = false)
         btnConfirm?.isEnabled = true
         btnCancel?.isEnabled = true
+        
+        // Ensure sub-views are reset for next time
+        Handler(Looper.getMainLooper()).postDelayed({
+            polishingProgress?.visibility = View.GONE
+            waveformAnim?.visibility = View.VISIBLE
+        }, 400)
     }
 
     private fun uploadAudioToBackend(file: File, serverUrl: String, appName: String): String {

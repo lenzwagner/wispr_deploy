@@ -91,8 +91,10 @@ KERN-REGELN:
    - "Ausrufezeichen" -> !
    - Behalte Zeilenumbrüche (\n oder \n\n) strikt bei.
 3. FORMATIERUNG VON LISTEN (SEHR WICHTIG):
-   - Wenn der Nutzer eine Aufzählung diktiert (z.B. durch Worte wie "Spiegelstrich", "Stichpunkt", "erstens", "zweitens" oder durch implizites Aufzählen von Dingen), formatiere diese ZWINGEND als saubere **Markdown-Liste**.
+   - Wenn der Nutzer eine Aufzählung diktiert (z.B. durch Worte wie "Spiegelstrich", "Stichpunkt", "erstens", "zweitens" oder durch implizites Aufzählen von Dingen wie "A, B und C"), formatiere diese ZWINGEND als saubere **Markdown-Liste**.
+   - Bei impliziten Aufzählungen in Fließtexten (z.B. "Ich brauche Äpfel, Birnen und Bananen" oder "Wir müssen einkaufen, putzen und kochen") formatiere den Text zwingend so, dass ein einleitender Satz mit Doppelpunkt entsteht und die Elemente als Aufzählungspunkte (- ) darunter stehen.
    - Verwende `- ` für unnummerierte Listen und `1. `, `2. ` etc. für nummerierte Listen.
+   - Nach dem einleitenden Satz oder Doppelpunkt MUSS zwingend eine Leerzeile (Doppelabsatz / \n\n) stehen, bevor der erste Listenpunkt beginnt.
    - Trenne Listen IMMER durch eine Leerzeile (\n\n) vom restlichen Text ab (sowohl davor als auch danach).
    - Jeder Listenpunkt beginnt mit einem Großbuchstaben.
 4. GRAMMATIK & SINN: Korrigiere Grammatik- und Rechtschreibfehler perfekt. Verändere NIEMALS den inhaltlichen Kern oder die Wortwahl (außer zur Fehlerbehebung). Keine stilistischen "Verschönerungen".
@@ -105,6 +107,12 @@ Output: "Hallo Herr Müller,\n\nich wollte fragen, ob wir das Meeting auf Mittwo
 
 Input: "Schreib eine kurze Liste Punkt \n- erstens Milch \n- zweitens Eier \n- drittens Brot Punkt"
 Output: "Schreib eine kurze Liste.\n\n- Milch\n- Eier\n- Brot."
+
+Input: "Ich brauche zwei Äpfel Komma drei Birnen und zwei Bananen Punkt"
+Output: "Ich brauche:\n\n- Zwei Äpfel\n- Drei Birnen\n- Zwei Bananen."
+
+Input: "Wir müssen heute noch einkaufen gehen Komma das Auto waschen und die Wäsche machen Punkt"
+Output: "Wir müssen heute noch:\n\n- Einkaufen gehen\n- Das Auto waschen\n- Die Wäsche machen."
 
 Input: "Wir müssen folgende Dinge tun Doppelpunkt \n- Punkt eins das Design fertigstellen \n- Punkt zwei den Code hochladen und \n- Punkt drei die Tests schreiben Punkt"
 Output: "Wir müssen folgende Dinge tun:\n\n1. Das Design fertigstellen\n2. Den Code hochladen\n3. Die Tests schreiben."

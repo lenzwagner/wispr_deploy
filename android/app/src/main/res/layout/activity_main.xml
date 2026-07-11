@@ -1,567 +1,298 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_dark"
-    android:padding="24dp"
+    android:background="?android:attr/windowBackground"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Wispr Flow"
+            app:titleCentered="true" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:padding="16dp">
 
-            <!-- App Title & Icon -->
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/ic_wispr_logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Wispr Flow"
-                android:textColor="@color/text_primary"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Systemweiter Schreibassistent"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
-
-            <!-- Master Toggle Card -->
+            <!-- Hero Section -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/primary"
-                app:strokeWidth="0dp">
+                style="?attr/materialCardViewFilledStyle"
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:cardCornerRadius="24dp"
+                android:layout_marginBottom="16dp">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:orientation="horizontal"
+                    android:padding="24dp"
+                    android:gravity="center_vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:text="Dienst aktiv"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Systemweit diktieren"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textColor="?attr/colorOnPrimaryContainer"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status: Aktiv"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnPrimaryContainer"
+                            android:alpha="0.8" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/masterEnabledSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        app:thumbTint="@color/white"
-                        app:trackTint="#80FFFFFF"
                         android:checked="true" />
 
-                </RelativeLayout>
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Configuration Card -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Einstellungen"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Config Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/card_dark"
-                app:strokeWidth="0dp">
+                style="?attr/materialCardViewElevatedStyle"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Server Einstellungen"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                    android:padding="16dp">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/urlInputLayout"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:hint="Backend API URL"
-                        app:hintTextColor="@color/primary"
-                        app:boxStrokeColor="@color/primary"
-                        app:placeholderText="http://10.0.2.2:8000">
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/urlInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/text_primary"
-                            android:inputType="textUri"
-                            android:text="http://10.0.2.2:8000" />
+                            android:inputType="textUri" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/saveUrlButton"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="8dp"
-                        android:text="URL Speichern"
-                        android:textColor="@color/primary" />
+                        android:text="Speichern"
+                        style="?attr/borderlessButtonStyle" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Appearance Card -->
+            <!-- Appearance Section -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/card_dark"
-                app:strokeWidth="0dp">
+                style="?attr/materialCardViewElevatedStyle"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <!-- Background Color Picker -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-                            <View
-                                android:id="@+id/colorBackgroundPreview"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circle_white"
-                                android:backgroundTint="#F5F3FF" />
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Hintergrund"
-                                android:textColor="@color/text_primary" />
-                            <Button
-                                android:id="@+id/btnPickBackgroundColor"
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Wählen"
-                                android:textColor="@color/primary" />
-                        </LinearLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            app:hintEnabled="false"
-                            app:boxStrokeColor="@color/primary">
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/colorBackgroundInput"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"
-                                android:textSize="14sp"
-                                android:padding="8dp"
-                                android:hint="#Hexadezimal"
-                                android:inputType="text" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <!-- Action Color Picker -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="12dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-                            <View
-                                android:id="@+id/colorActionPreview"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circle_white"
-                                android:backgroundTint="#6366F1" />
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Bestätigen-Button"
-                                android:textColor="@color/text_primary" />
-                            <Button
-                                android:id="@+id/btnPickActionColor"
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Wählen"
-                                android:textColor="@color/primary" />
-                        </LinearLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            app:hintEnabled="false"
-                            app:boxStrokeColor="@color/primary">
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/colorActionInput"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"
-                                android:textSize="14sp"
-                                android:padding="8dp"
-                                android:hint="#Hexadezimal"
-                                android:inputType="text" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <!-- Icon Color Picker -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="12dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-                            <View
-                                android:id="@+id/colorIconPreview"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circle_white"
-                                android:backgroundTint="#4F46E5" />
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="12dp"
-                                android:text="Symbole"
-                                android:textColor="@color/text_primary" />
-                            <Button
-                                android:id="@+id/btnPickIconColor"
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Wählen"
-                                android:textColor="@color/primary" />
-                        </LinearLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            app:hintEnabled="false"
-                            app:boxStrokeColor="@color/primary">
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/colorIconInput"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/text_primary"
-                                android:textSize="14sp"
-                                android:padding="8dp"
-                                android:hint="#Hexadezimal"
-                                android:inputType="text" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <!-- Keep Save Button but hidden if you want auto-save on change -->
-                    <Button
-                        android:id="@+id/saveColorsButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Farben Speichern"
-                        android:backgroundTint="@color/primary" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Permissions Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/card_dark"
-                app:strokeWidth="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Erforderliche Berechtigungen"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:text="Erscheinungsbild"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:layout_marginBottom="16dp" />
 
-                    <!-- Accessibility Permission -->
+                    <!-- Background -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/accessibilityStatusIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@android:drawable/presence_offline"
-                            app:tint="@color/recording_red" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Barrierefreiheit"
-                                android:textColor="@color/text_primary"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Erlaubt das Einfügen des Textes"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <Button
-                            android:id="@+id/btnAccessibility"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Aktivieren"
-                            android:textSize="12sp"
-                            android:backgroundTint="@color/primary" />
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+                        <View android:id="@+id/colorBackgroundPreview" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/circle_white" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Hintergrund" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnPickBackgroundColor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wählen" style="?attr/materialButtonOutlinedStyle" />
                     </LinearLayout>
+                    <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Widget.Material3.TextInputLayout.OutlinedBox" app:hintEnabled="false">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/colorBackgroundInput" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="#Hex" android:textSize="14sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Overlay Permission -->
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?attr/colorSurfaceVariant" android:layout_marginVertical="12dp" />
+
+                    <!-- Action -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/overlayStatusIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@android:drawable/presence_offline"
-                            app:tint="@color/recording_red" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Über anderen Apps anzeigen"
-                                android:textColor="@color/text_primary"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Zeigt das schwebende Mikrofon an"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <Button
-                            android:id="@+id/btnOverlay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Aktivieren"
-                            android:textSize="12sp"
-                            android:backgroundTint="@color/primary" />
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+                        <View android:id="@+id/colorActionPreview" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/circle_white" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Bestätigen" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnPickActionColor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wählen" style="?attr/materialButtonOutlinedStyle" />
                     </LinearLayout>
+                    <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Widget.Material3.TextInputLayout.OutlinedBox" app:hintEnabled="false">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/colorActionInput" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="#Hex" android:textSize="14sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Record Audio Permission (Standard Runtime Permission) -->
-                    <LinearLayout
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/saveColorsButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginTop="16dp"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/audioStatusIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@android:drawable/presence_offline"
-                            app:tint="@color/recording_red" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Mikrofonzugriff"
-                                android:textColor="@color/text_primary"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Ermöglicht die Audioaufnahme"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <Button
-                            android:id="@+id/btnAudioPermission"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Zulassen"
-                            android:textSize="12sp"
-                            android:backgroundTint="@color/primary" />
-                    </LinearLayout>
+                        android:text="Alle Farben Speichern" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- History Card -->
+            <!-- Permissions -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Berechtigungen"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/card_dark"
-                app:strokeWidth="0dp">
+                style="?attr/materialCardViewElevatedStyle"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="8dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:text="Verlauf (letzte 24h)"
-                            android:textColor="@color/text_primary"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/btnClearHistory"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:text="Leeren"
-                            android:textColor="@color/recording_red"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-
-                    <!-- History Items Container -->
-                    <LinearLayout
-                        android:id="@+id/historyContainer"
+                    <!-- Accessibility -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAccessibility"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="12dp" />
+                        android:text="Barrierefreiheit"
+                        app:icon="@android:drawable/ic_menu_info_details"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_margin="4dp" />
 
-                    <TextView
-                        android:id="@+id/emptyHistoryText"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOverlay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginTop="12dp"
-                        android:text="Keine Einträge vorhanden."
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
+                        android:text="Über Apps anzeigen"
+                        app:icon="@android:drawable/ic_menu_view"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_margin="4dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAudioPermission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mikrofonzugriff"
+                        app:icon="@android:drawable/ic_btn_speak_now"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_margin="4dp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
+            <!-- History -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Verlauf"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClearHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Leeren"
+                    style="?attr/borderlessButtonStyle"
+                    android:textColor="?attr/colorError" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/historyContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/emptyHistoryText"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:gravity="center"
-                android:text="Sobald alle Berechtigungen erteilt sind, erscheint ein schwebendes Mikrofon an der Seite des Bildschirms, wenn ein Textfeld fokussiert wird. Halte es gedrückt, um zu sprechen."
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
+                android:text="Keine Einträge"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:alpha="0.5" />
 
         </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Visual status indicators can be small dots on the cards or similar in future -->
+    <ImageView android:id="@+id/accessibilityStatusIcon" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+    <ImageView android:id="@+id/overlayStatusIcon" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+    <ImageView android:id="@+id/audioStatusIcon" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone">
+        <com.google.android.material.textfield.TextInputEditText android:id="@+id/colorIconInput" android:layout_width="0dp" android:layout_height="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <View android:id="@+id/colorIconPreview" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+    <Button android:id="@+id/btnPickIconColor" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

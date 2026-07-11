@@ -2,20 +2,45 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    
-    <!-- Premium Color Palette -->
-    <color name="primary">#6366F1</color> <!-- Indigo -->
+
+    <!-- M3 Light Palette (Indigo/Slate) -->
+    <color name="md_theme_light_primary">#4F46E5</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#E0E7FF</color>
+    <color name="md_theme_light_onPrimaryContainer">#1E1B4B</color>
+    <color name="md_theme_light_secondary">#10B981</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_background">#F8FAFC</color>
+    <color name="md_theme_light_onBackground">#0F172A</color>
+    <color name="md_theme_light_surface">#FFFFFF</color>
+    <color name="md_theme_light_onSurface">#0F172A</color>
+    <color name="md_theme_light_surfaceVariant">#F1F5F9</color>
+    <color name="md_theme_light_onSurfaceVariant">#475569</color>
+    <color name="md_theme_light_error">#EF4444</color>
+
+    <!-- M3 Dark Palette -->
+    <color name="md_theme_dark_primary">#818CF8</color>
+    <color name="md_theme_dark_onPrimary">#1E1B4B</color>
+    <color name="md_theme_dark_primaryContainer">#312E81</color>
+    <color name="md_theme_dark_onPrimaryContainer">#E0E7FF</color>
+    <color name="md_theme_dark_secondary">#34D399</color>
+    <color name="md_theme_dark_onSecondary">#064E3B</color>
+    <color name="md_theme_dark_background">#0F172A</color>
+    <color name="md_theme_dark_onBackground">#F1F5F9</color>
+    <color name="md_theme_dark_surface">#1E293B</color>
+    <color name="md_theme_dark_onSurface">#F1F5F9</color>
+    <color name="md_theme_dark_surfaceVariant">#334155</color>
+    <color name="md_theme_dark_onSurfaceVariant">#94A3B8</color>
+    <color name="md_theme_dark_error">#F87171</color>
+
+    <!-- App specific -->
+    <color name="primary">#6366F1</color>
     <color name="primary_dark">#4F46E5</color>
-    <color name="accent">#10B981</color> <!-- Emerald -->
-    <color name="background_dark">#0F172A</color> <!-- Slate 900 -->
-    <color name="card_dark">#1E293B</color> <!-- Slate 800 -->
-    <color name="text_primary">#F8FAFC</color> <!-- Slate 50 -->
-    <color name="text_secondary">#94A3B8</color> <!-- Slate 400 -->
-    <color name="recording_red">#EF4444</color> <!-- Red 500 -->
+    <color name="accent">#10B981</color>
+    <color name="background_dark">#0F172A</color>
+    <color name="card_dark">#1E293B</color>
+    <color name="text_primary">#F8FAFC</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="recording_red">#EF4444</color>
     <color name="light_purple">#F5F3FF</color>
 </resources>
