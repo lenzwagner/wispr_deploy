@@ -97,8 +97,12 @@ KERN-REGELN:
    - Nach dem einleitenden Satz oder Doppelpunkt MUSS zwingend eine Leerzeile (Doppelabsatz / \n\n) stehen, bevor der erste Listenpunkt beginnt.
    - Trenne Listen IMMER durch eine Leerzeile (\n\n) vom restlichen Text ab (sowohl davor als auch danach).
    - Jeder Listenpunkt beginnt mit einem Großbuchstaben.
-4. GRAMMATIK & SINN: Korrigiere Grammatik- und Rechtschreibfehler perfekt. Verändere NIEMALS den inhaltlichen Kern oder die Wortwahl (außer zur Fehlerbehebung). Keine stilistischen "Verschönerungen".
-5. STRIKTES OUTPUT-FORMAT: Gib AUSSCHLIESSLICH den finalen, optimierten Text zurück. Keine Einleitung, kein "Hier ist der Text:".
+4. ZAHLEN ALS ZIFFERN (SEHR WICHTIG):
+   - Schreibe alle gesprochenen Zahlen (z.B. "zwei", "drei", "vier", "zehn", "hundert" etc.), die Mengen, Stückzahlen, Werte oder Uhrzeiten angeben, ZWINGEND als Ziffern ("2", "3", "4", "10", "100" etc.).
+   - Dies gilt ausnahmslos auch am Anfang von Listenpunkten oder Sätzen.
+   - Unbestimmte Artikel ("ein", "eine") können als solche beibehalten werden, es sei denn, sie bezeichnen klar die Anzahl 1.
+5. GRAMMATIK & SINN: Korrigiere Grammatik- und Rechtschreibfehler perfekt. Verändere NIEMALS den inhaltlichen Kern oder die Wortwahl (außer zur Fehlerbehebung). Keine stilistischen "Verschönerungen".
+6. STRIKTES OUTPUT-FORMAT: Gib AUSSCHLIESSLICH den finalen, optimierten Text zurück. Keine Einleitung, kein "Hier ist der Text:".
 
 BEISPIELE FÜR DIE KORREKTUR (FEW-SHOT):
 
@@ -109,7 +113,7 @@ Input: "Schreib eine kurze Liste Punkt \n- erstens Milch \n- zweitens Eier \n- d
 Output: "Schreib eine kurze Liste.\n\n- Milch\n- Eier\n- Brot."
 
 Input: "Ich brauche zwei Äpfel Komma drei Birnen und zwei Bananen Punkt"
-Output: "Ich brauche:\n\n- Zwei Äpfel\n- Drei Birnen\n- Zwei Bananen."
+Output: "Ich brauche:\n\n- 2 Äpfel\n- 3 Birnen\n- 2 Bananen."
 
 Input: "Wir müssen heute noch einkaufen gehen Komma das Auto waschen und die Wäsche machen Punkt"
 Output: "Wir müssen heute noch:\n\n- Einkaufen gehen\n- Das Auto waschen\n- Die Wäsche machen."
@@ -231,10 +235,13 @@ def health_check():
 @app.post("/transcribe", response_model=TranscribeResponse)
 def transcribe_audio(
     file: UploadFile = File(...),
-    app_name: Optional[str] = Form(None)
+    app_name: Optional[str] = Form(None),
+    context: Optional[str] = Form(None)
 ):
     print("--- Transcribe Request ---")
-    print(f"Detected Keys: GROQ_API_KEY={'set' if groq_api_key else 'MISSING'}, NVIDIA_API_KEY={'set' if nvidia_api_key else 'MISSING'}, OPENAI_API_KEY={'set' if openai_api_key else 'MISSING'}, ANTHROPIC_API_KEY={'set' if anthropic_api_key else 'MISSING'}")
+    print(f"App: {app_name}")
+    if context:
+        print(f"Context captured (length: {len(context)})")
 
     if not groq_api_key and not openai_api_key and not nvidia_api_key:
         raise HTTPException(
@@ -297,6 +304,10 @@ def transcribe_audio(
         polished_text = ""
         system_prompt = get_app_specific_prompt(app_name)
 
+        user_content = f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"
+        if context:
+            user_content = f"KONTEXT VOM BILDSCHIRM (Nutze dies für korrekte Namen, Fachbegriffe und Stil):\n{context}\n\n---\n\nTRANSKRIPT ZUM OPTIMIEREN:\n{pre_processed_text}"
+
         if anthropic_client:
             try:
                 message = anthropic_client.messages.create(
@@ -305,7 +316,7 @@ def transcribe_audio(
                     temperature=0.0,
                     system=system_prompt,
                     messages=[
-                        {"role": "user", "content": f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"}
+                        {"role": "user", "content": user_content}
                     ]
                 )
                 polished_text = message.content[0].text.strip()
@@ -318,7 +329,7 @@ def transcribe_audio(
                     model=OPENAI_LLM_MODEL,
                     messages=[
                         {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"}
+                        {"role": "user", "content": user_content}
                     ],
                     temperature=0.0
                 )
@@ -334,7 +345,7 @@ def transcribe_audio(
                     model=NVIDIA_LLM_MODEL,
                     messages=[
                         {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"}
+                        {"role": "user", "content": user_content}
                     ],
                     temperature=0.0,
                     **extra_args
@@ -349,7 +360,7 @@ def transcribe_audio(
                     model=GROQ_LLM_MODEL,
                     messages=[
                         {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": f"Hier ist das Transkript zum Optimieren:\n\n{pre_processed_text}"}
+                        {"role": "user", "content": user_content}
                     ],
                     temperature=0.0
                 )

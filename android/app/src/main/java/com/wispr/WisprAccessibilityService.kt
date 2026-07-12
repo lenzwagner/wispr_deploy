@@ -563,10 +563,13 @@ class WisprAccessibilityService : AccessibilityService() {
 
         val prefs = getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
         val backendUrl = prefs.getString("backend_url", "https://wispr-deploy.onrender.com") ?: "https://wispr-deploy.onrender.com"
+        
+        // Capture screen context before background task
+        val screenContext = extractScreenContext()
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val responseText = uploadAudioToBackend(file, backendUrl, focusedAppPackage ?: "")
+                val responseText = uploadAudioToBackend(file, backendUrl, focusedAppPackage ?: "", screenContext)
                 
                 withContext(Dispatchers.Main) {
                     HistoryManager(this@WisprAccessibilityService).saveItem(responseText)
@@ -583,6 +586,37 @@ class WisprAccessibilityService : AccessibilityService() {
         }
     }
 
+    private fun extractScreenContext(): String {
+        val root = rootInActiveWindow ?: return ""
+        val context = StringBuilder()
+        // Add app name as first hint
+        context.append("App: ").append(focusedAppPackage ?: "Unknown").append("\n")
+        
+        collectVisibleText(root, context, 0)
+        return context.toString().take(2000) // Limit to 2000 chars for efficiency
+    }
+
+    private fun collectVisibleText(node: AccessibilityNodeInfo?, sb: StringBuilder, depth: Int) {
+        if (node == null || depth > 25) return
+        
+        if (node.isVisibleToUser) {
+            val text = node.text?.toString() ?: node.contentDescription?.toString()
+            if (!text.isNullOrBlank() && text.length > 1) {
+                // Avoid adding the text we are currently typing if it's already huge
+                if (node.isEditable && text.length > 500) {
+                    sb.append("[Editable Field Content...]\n")
+                } else {
+                    sb.append(text).append("\n")
+                }
+            }
+        }
+        
+        for (i in 0 until node.childCount) {
+            val child = node.getChild(i)
+            collectVisibleText(child, sb, depth + 1)
+        }
+    }
+
     private fun resetOverlayUI() {
         animateOverlay(expand = false)
         btnConfirm?.isEnabled = true
@@ -595,7 +629,7 @@ class WisprAccessibilityService : AccessibilityService() {
         }, 400)
     }
 
-    private fun uploadAudioToBackend(file: File, serverUrl: String, appName: String): String {
+    private fun uploadAudioToBackend(file: File, serverUrl: String, appName: String, screenContext: String = ""): String {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart(
@@ -604,6 +638,7 @@ class WisprAccessibilityService : AccessibilityService() {
                 file.asRequestBody("audio/mp4".toMediaTypeOrNull())
             )
             .addFormDataPart("app_name", appName)
+            .addFormDataPart("context", screenContext)
             .build()
 
         val fullUrl = if (serverUrl.endsWith("/")) "${serverUrl}transcribe" else "$serverUrl/transcribe"
@@ -624,42 +659,44 @@ class WisprAccessibilityService : AccessibilityService() {
     }
 
     private fun injectText(polishedText: String) {
-        val node = currentFocusedNode ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        val node = currentFocusedNode?.let {
+            if (it.refresh()) it else rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        } ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+
         if (node != null) {
-            var existingText = node.text?.toString() ?: ""
+            val existingText = node.text?.toString() ?: ""
             val hintText = node.hintText?.toString() ?: ""
             
-            // Fix for Gemini/Search Bars: If existing text is exactly the hint, ignore it
-            if (existingText == hintText) {
-                existingText = ""
+            // Fix for Gemini/Search Bars/Keep: If existing text is exactly the hint, treat as empty
+            val actualText = if (existingText == hintText) "" else existingText
+
+            val prefix = when {
+                actualText.isEmpty() -> ""
+                // Double newline after greetings
+                actualText.trim().endsWith(",") || 
+                actualText.trim().endsWith("!") ||
+                actualText.contains(Regex("(Hallo|Hi|Sehr geehrte|Moin|Servus).*", RegexOption.IGNORE_CASE)) && actualText.length < 50 -> "\n\n"
+                !actualText.endsWith(" ") && !actualText.endsWith("\n") -> " "
+                else -> ""
             }
 
-            val textToInject = when {
-                existingText.isEmpty() -> polishedText
-                
-                // Double newline after greetings (e.g. "Hallo Herr ...", "Sehr geehrte Damen und Herren,")
-                existingText.trim().endsWith(",") || 
-                existingText.trim().endsWith("!") ||
-                existingText.contains(Regex("(Hallo|Hi|Sehr geehrte|Moin|Servus).*", RegexOption.IGNORE_CASE)) && existingText.length < 50 -> {
-                    "$existingText\n\n$polishedText"
+            val textToInject = "$prefix$polishedText"
+
+            // 1. Try ACTION_PASTE first (Most reliable for persistence in apps like Google Keep)
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Wispr", textToInject)
+            clipboard.setPrimaryClip(clip)
+            
+            node.performAction(AccessibilityNodeInfo.ACTION_FOCUS)
+            val pasteSuccess = node.performAction(AccessibilityNodeInfo.ACTION_PASTE)
+            
+            if (!pasteSuccess) {
+                // 2. Fallback to ACTION_SET_TEXT if paste fails
+                val fullText = actualText + textToInject
+                val arguments = Bundle().apply {
+                    putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, fullText)
                 }
-                
-                !existingText.endsWith(" ") -> "$existingText $polishedText"
-                else -> "$existingText$polishedText"
-            }
-
-            val arguments = Bundle().apply {
-                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, textToInject)
-            }
-            
-            val success = node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
-            
-            if (!success) {
-                // Fallback for apps that don't support ACTION_SET_TEXT
-                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("Wispr", textToInject)
-                clipboard.setPrimaryClip(clip)
-                node.performAction(AccessibilityNodeInfo.ACTION_PASTE)
+                node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
             }
 
             Toast.makeText(this, "Text eingefügt!", Toast.LENGTH_SHORT).show()
