@@ -1073,3 +1073,198 @@ Aktuell, wenn ich in Android etwas einspreche und automatisch einfügen lasse, w
 }, falling back to CGEvent
 [2026-07-11 06:56:53 +0000] Fallback to CGEvent paste simulation...
 [2026-07-11 06:56:53 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 13:19:53 +0000] Text copied to clipboard: Das ist eine Bachelorarbeit. Ich werde diese strukturiert durchgehen und dann meine Meinung dazu abgeben, wie diese zu benutzen ist. Ich werde dabei vor allem das mathematische Modell überprüfen, ob es korrekt ist, ob alle Constraints funktionieren, ob die Analysen sinnvoll sind, ob die Ergebnisse sinnvoll sind und so weiter.
+[2026-07-15 13:19:53 +0000] AXIsProcessTrusted: true
+[2026-07-15 13:19:53 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-15 13:19:53 +0000] Executing AppleScript paste...
+[2026-07-15 13:19:54 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 13:19:54 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 13:19:54 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 13:20:17 +0000] Text copied to clipboard: Danke.
+[2026-07-15 13:20:17 +0000] Text copied to clipboard: Danke.
+[2026-07-15 13:20:17 +0000] AXIsProcessTrusted: false
+[2026-07-15 13:20:17 +0000] Frontmost Application: Finder (com.apple.finder)
+[2026-07-15 13:20:17 +0000] Executing AppleScript paste...
+[2026-07-15 13:20:17 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 13:20:17 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 13:20:17 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 13:20:17 +0000] AXIsProcessTrusted: true
+[2026-07-15 13:20:17 +0000] Frontmost Application: Finder (com.apple.finder)
+[2026-07-15 13:20:17 +0000] Executing AppleScript paste...
+[2026-07-15 13:20:18 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 13:20:18 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 13:20:18 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:21:45 +0000] Text copied to clipboard: You
+[2026-07-15 15:21:45 +0000] AXIsProcessTrusted: true
+[2026-07-15 15:21:45 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-15 15:21:45 +0000] Executing AppleScript paste...
+[2026-07-15 15:21:46 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:21:46 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:21:46 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:21:46 +0000] Text copied to clipboard: You
+[2026-07-15 15:21:47 +0000] AXIsProcessTrusted: false
+[2026-07-15 15:21:47 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-15 15:21:47 +0000] Executing AppleScript paste...
+[2026-07-15 15:21:47 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:21:47 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:21:47 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:21:48 +0000] Text copied to clipboard: You
+[2026-07-15 15:21:48 +0000] AXIsProcessTrusted: true
+[2026-07-15 15:21:48 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-15 15:21:48 +0000] Executing AppleScript paste...
+[2026-07-15 15:21:48 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:21:48 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:21:48 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:21:49 +0000] Text copied to clipboard: You
+[2026-07-15 15:21:49 +0000] AXIsProcessTrusted: false
+[2026-07-15 15:21:49 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-15 15:21:49 +0000] Executing AppleScript paste...
+[2026-07-15 15:21:49 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:21:49 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:21:49 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:21:50 +0000] Text copied to clipboard: You
+[2026-07-15 15:21:50 +0000] AXIsProcessTrusted: true
+[2026-07-15 15:21:50 +0000] Frontmost Application: UserNotificationCenter (com.apple.UserNotificationCenter)
+[2026-07-15 15:21:50 +0000] Executing AppleScript paste...
+[2026-07-15 15:21:50 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:21:50 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:21:50 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:22:02 +0000] Text copied to clipboard: Våla!
+[2026-07-15 15:22:02 +0000] AXIsProcessTrusted: true
+[2026-07-15 15:22:02 +0000] Frontmost Application: Finder (com.apple.finder)
+[2026-07-15 15:22:02 +0000] Executing AppleScript paste...
+[2026-07-15 15:22:02 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:22:02 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:22:02 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:23:04 +0000] Text copied to clipboard: Kannst du mir dabei helfen, basierend auf meinen Chlor-Chats, die ich als MD-Datei vorliegen habe, ein Second Brain zu implementieren, was alle Bereiche so ähnlich wie die Grafenstruktur in Obsidian darstellt, aber auch die einzelnen Bereiche nach Größe sortiert und das alles visuell als Web-Anwendung darstellt?
+[2026-07-15 15:23:04 +0000] Text copied to clipboard: Kannst du mir dabei helfen, basierend auf meinen Chlor-Chats, die ich als MD-Datei vorliegen habe, ein Second Brain zu implementieren, was alle Bereiche so ähnlich wie die Grafenstruktur in Obsidian darstellt, aber auch die einzelnen Bereiche nach Größe sortiert und das alles visuell als Web-Anwendung darstellt?
+[2026-07-15 15:23:04 +0000] AXIsProcessTrusted: true
+[2026-07-15 15:23:04 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-15 15:23:04 +0000] Executing AppleScript paste...
+[2026-07-15 15:23:04 +0000] AXIsProcessTrusted: false
+[2026-07-15 15:23:04 +0000] Frontmost Application: Terminal (com.apple.Terminal)
+[2026-07-15 15:23:04 +0000] Executing AppleScript paste...
+[2026-07-15 15:23:04 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:23:04 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:23:04 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-15 15:23:04 +0000] Fallback to CGEvent paste simulation...
+[2026-07-15 15:23:04 +0000] CGEvent paste simulation posted successfully
+[2026-07-15 15:23:04 +0000] CGEvent paste simulation posted successfully
+[2026-07-16 18:54:55 +0000] Text copied to clipboard: Gamsahamnida.
+[2026-07-16 18:54:55 +0000] Text copied to clipboard: Gamsahamnida.
+[2026-07-16 18:54:55 +0000] AXIsProcessTrusted: true
+[2026-07-16 18:54:55 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-16 18:54:55 +0000] Executing AppleScript paste...
+[2026-07-16 18:54:55 +0000] AXIsProcessTrusted: false
+[2026-07-16 18:54:55 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-16 18:54:55 +0000] Executing AppleScript paste...
+[2026-07-16 18:54:56 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-16 18:54:56 +0000] Fallback to CGEvent paste simulation...
+[2026-07-16 18:54:56 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-16 18:54:56 +0000] Fallback to CGEvent paste simulation...
+[2026-07-16 18:54:56 +0000] CGEvent paste simulation posted successfully
+[2026-07-16 18:54:56 +0000] CGEvent paste simulation posted successfully
+[2026-07-16 18:55:59 +0000] Text copied to clipboard: Ich
+[2026-07-16 18:55:59 +0000] Text copied to clipboard: Ich
+[2026-07-16 18:55:59 +0000] AXIsProcessTrusted: true
+[2026-07-16 18:55:59 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-16 18:55:59 +0000] Executing AppleScript paste...
+[2026-07-16 18:55:59 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-16 18:55:59 +0000] Fallback to CGEvent paste simulation...
+[2026-07-16 18:55:59 +0000] CGEvent paste simulation posted successfully
+[2026-07-16 18:55:59 +0000] AXIsProcessTrusted: false
+[2026-07-16 18:55:59 +0000] Frontmost Application: Google Chrome (com.google.Chrome)
+[2026-07-16 18:55:59 +0000] Executing AppleScript paste...
+[2026-07-16 18:55:59 +0000] AppleScript paste failed: {
+    NSAppleScriptErrorAppName = "System Events";
+    NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorMessage = "Not authorized to send Apple events to System Events.";
+    NSAppleScriptErrorNumber = "-1743";
+    NSAppleScriptErrorRange = "NSRange: {31, 39}";
+}, falling back to CGEvent
+[2026-07-16 18:55:59 +0000] Fallback to CGEvent paste simulation...
+[2026-07-16 18:55:59 +0000] CGEvent paste simulation posted successfully

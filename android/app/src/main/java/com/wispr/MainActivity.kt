@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var urlInput: EditText
     private lateinit var saveUrlButton: Button
+    private lateinit var snoozeMinutesInput: EditText
+    private lateinit var saveSnoozeButton: Button
     private lateinit var colorBackgroundInput: EditText
     private lateinit var colorActionInput: EditText
     private lateinit var colorIconInput: EditText
@@ -65,6 +67,8 @@ class MainActivity : AppCompatActivity() {
         // Initialize Views
         urlInput = findViewById(R.id.urlInput)
         saveUrlButton = findViewById(R.id.saveUrlButton)
+        snoozeMinutesInput = findViewById(R.id.snoozeMinutesInput)
+        saveSnoozeButton = findViewById(R.id.saveSnoozeButton)
         colorBackgroundInput = findViewById(R.id.colorBackgroundInput)
         colorActionInput = findViewById(R.id.colorActionInput)
         colorIconInput = findViewById(R.id.colorIconInput)
@@ -104,7 +108,10 @@ class MainActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
         val savedUrl = prefs.getString("backend_url", "https://wispr-deploy.onrender.com")
         urlInput.setText(savedUrl)
-        
+
+        val snoozeMinutes = prefs.getInt("snooze_minutes", 10)
+        snoozeMinutesInput.setText(snoozeMinutes.toString())
+
         val isMasterEnabled = prefs.getBoolean("master_enabled", true)
         masterEnabledSwitch.isChecked = isMasterEnabled
         
@@ -158,6 +165,19 @@ class MainActivity : AppCompatActivity() {
 
         saveColorsButton.setOnClickListener {
             saveColors()
+        }
+
+        saveSnoozeButton.setOnClickListener {
+            val minutes = snoozeMinutesInput.text.toString().trim().toIntOrNull()
+            if (minutes != null && minutes > 0) {
+                getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
+                    .edit()
+                    .putInt("snooze_minutes", minutes)
+                    .apply()
+                Toast.makeText(this, "Pausendauer gespeichert!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Bitte gültige Minutenzahl eingeben", Toast.LENGTH_SHORT).show()
+            }
         }
 
         saveColorsButton.visibility = View.VISIBLE

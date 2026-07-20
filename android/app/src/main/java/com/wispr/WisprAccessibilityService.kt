@@ -69,6 +69,12 @@ class WisprAccessibilityService : AccessibilityService() {
     private var polishingProgress: ProgressBar? = null
     private var waveformAnim: ImageView? = null
 
+    private var dismissTargetView: View? = null
+    private var dismissIconCard: MaterialCardView? = null
+    private var isOverDismissTarget = false
+    private val snoozeHandler = Handler(Looper.getMainLooper())
+    private var snoozeRunnable: Runnable? = null
+
     private var mediaRecorder: MediaRecorder? = null
     private var audioFile: File? = null
     private var isRecording = false
@@ -145,6 +151,13 @@ class WisprAccessibilityService : AccessibilityService() {
         val isMasterEnabled = prefs.getBoolean("master_enabled", true)
         if (!isMasterEnabled) {
             Log.d("Wispr", "Visibility check: Master toggle is OFF")
+            hideFloatingMic()
+            return
+        }
+
+        // Check Snooze
+        val snoozedUntil = prefs.getLong("snoozed_until", 0L)
+        if (snoozedUntil > System.currentTimeMillis()) {
             hideFloatingMic()
             return
         }
@@ -255,7 +268,9 @@ class WisprAccessibilityService : AccessibilityService() {
     override fun onDestroy() {
         super.onDestroy()
         hideFloatingMic()
+        hideDismissTarget()
         stopRecording()
+        snoozeRunnable?.let { snoozeHandler.removeCallbacks(it) }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -334,21 +349,34 @@ class WisprAccessibilityService : AccessibilityService() {
                         val dragThreshold = 5 * density
                         if (!isDragging && (Math.abs(dx) > dragThreshold || Math.abs(dy) > dragThreshold)) {
                             isDragging = true
+                            if (isRecording) showDismissTarget()
                         }
 
                         if (isDragging) {
                             layoutParams.x = initialX + dx
                             layoutParams.y = initialY + dy
                             windowManager.updateViewLayout(currentView, layoutParams)
+
+                            if (isRecording) {
+                                updateDismissTargetHover(event.rawX, event.rawY)
+                            }
                         }
                         return true
                     }
                     MotionEvent.ACTION_UP -> {
                         if (isDragging) {
+                            if (isRecording && isOverDismissTarget) {
+                                hideDismissTarget()
+                                dismissRecordingWithSnooze()
+                                return true
+                            }
+
+                            hideDismissTarget()
+
                             val displayMetrics = resources.displayMetrics
                             val screenWidth = displayMetrics.widthPixels
                             val viewWidth = currentView.width
-                            
+
                             // Determine side based on raw position
                             if (event.rawX < screenWidth / 2) {
                                 // Left side
@@ -359,7 +387,7 @@ class WisprAccessibilityService : AccessibilityService() {
                                 layoutParams.gravity = Gravity.TOP or Gravity.END
                                 layoutParams.x = 0
                             }
-                            
+
                             windowManager.updateViewLayout(currentView, layoutParams)
 
                             // Save position (always store as absolute X from left for consistency)
@@ -410,6 +438,93 @@ class WisprAccessibilityService : AccessibilityService() {
             }
             floatingView = null
         }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun showDismissTarget() {
+        if (dismissTargetView != null) return
+        if (!Settings.canDrawOverlays(this)) return
+
+        val themedContext = android.view.ContextThemeWrapper(this, R.style.Theme_Wispr)
+        val inflater = LayoutInflater.from(themedContext)
+        val view = inflater.inflate(R.layout.dismiss_target_layout, null)
+        dismissTargetView = view
+        dismissIconCard = view.findViewById(R.id.dismissIconCard)
+
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            else
+                WindowManager.LayoutParams.TYPE_PHONE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.BOTTOM
+        }
+
+        windowManager.addView(view, params)
+    }
+
+    private fun getDismissTargetCenter(): Pair<Float, Float>? {
+        val card = dismissIconCard ?: return null
+        val loc = IntArray(2)
+        card.getLocationOnScreen(loc)
+        return Pair(loc[0] + card.width / 2f, loc[1] + card.height / 2f)
+    }
+
+    private fun updateDismissTargetHover(touchRawX: Float, touchRawY: Float) {
+        val center = getDismissTargetCenter() ?: return
+        val density = resources.displayMetrics.density
+        val hitRadius = 48 * density
+
+        val dx = touchRawX - center.first
+        val dy = touchRawY - center.second
+        val distance = Math.sqrt((dx * dx + dy * dy).toDouble())
+
+        val wasOver = isOverDismissTarget
+        isOverDismissTarget = distance < hitRadius
+
+        if (isOverDismissTarget != wasOver) {
+            dismissIconCard?.animate()
+                ?.scaleX(if (isOverDismissTarget) 1.2f else 1f)
+                ?.scaleY(if (isOverDismissTarget) 1.2f else 1f)
+                ?.setDuration(150)
+                ?.start()
+        }
+    }
+
+    private fun hideDismissTarget() {
+        isOverDismissTarget = false
+        dismissTargetView?.let {
+            try {
+                windowManager.removeView(it)
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+        dismissTargetView = null
+        dismissIconCard = null
+    }
+
+    private fun dismissRecordingWithSnooze() {
+        cancelRecording()
+
+        val prefs = getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
+        val snoozeMinutes = prefs.getInt("snooze_minutes", 10)
+        val snoozeMillis = snoozeMinutes * 60_000L
+        val snoozedUntil = System.currentTimeMillis() + snoozeMillis
+
+        prefs.edit().putLong("snoozed_until", snoozedUntil).apply()
+        hideFloatingMic()
+
+        Toast.makeText(this, "Wispr pausiert für $snoozeMinutes Min.", Toast.LENGTH_SHORT).show()
+
+        snoozeRunnable?.let { snoozeHandler.removeCallbacks(it) }
+        val runnable = Runnable { checkAndManageFloatingMicVisibility() }
+        snoozeRunnable = runnable
+        snoozeHandler.postDelayed(runnable, snoozeMillis)
     }
 
     private fun startRecording() {
@@ -564,12 +679,9 @@ class WisprAccessibilityService : AccessibilityService() {
         val prefs = getSharedPreferences("wispr_prefs", Context.MODE_PRIVATE)
         val backendUrl = prefs.getString("backend_url", "https://wispr-deploy.onrender.com") ?: "https://wispr-deploy.onrender.com"
         
-        // Capture screen context before background task
-        val screenContext = extractScreenContext()
-
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val responseText = uploadAudioToBackend(file, backendUrl, focusedAppPackage ?: "", screenContext)
+                val responseText = uploadAudioToBackend(file, backendUrl, focusedAppPackage ?: "")
                 
                 withContext(Dispatchers.Main) {
                     HistoryManager(this@WisprAccessibilityService).saveItem(responseText)
@@ -586,37 +698,6 @@ class WisprAccessibilityService : AccessibilityService() {
         }
     }
 
-    private fun extractScreenContext(): String {
-        val root = rootInActiveWindow ?: return ""
-        val context = StringBuilder()
-        // Add app name as first hint
-        context.append("App: ").append(focusedAppPackage ?: "Unknown").append("\n")
-        
-        collectVisibleText(root, context, 0)
-        return context.toString().take(2000) // Limit to 2000 chars for efficiency
-    }
-
-    private fun collectVisibleText(node: AccessibilityNodeInfo?, sb: StringBuilder, depth: Int) {
-        if (node == null || depth > 25) return
-        
-        if (node.isVisibleToUser) {
-            val text = node.text?.toString() ?: node.contentDescription?.toString()
-            if (!text.isNullOrBlank() && text.length > 1) {
-                // Avoid adding the text we are currently typing if it's already huge
-                if (node.isEditable && text.length > 500) {
-                    sb.append("[Editable Field Content...]\n")
-                } else {
-                    sb.append(text).append("\n")
-                }
-            }
-        }
-        
-        for (i in 0 until node.childCount) {
-            val child = node.getChild(i)
-            collectVisibleText(child, sb, depth + 1)
-        }
-    }
-
     private fun resetOverlayUI() {
         animateOverlay(expand = false)
         btnConfirm?.isEnabled = true
@@ -629,7 +710,7 @@ class WisprAccessibilityService : AccessibilityService() {
         }, 400)
     }
 
-    private fun uploadAudioToBackend(file: File, serverUrl: String, appName: String, screenContext: String = ""): String {
+    private fun uploadAudioToBackend(file: File, serverUrl: String, appName: String): String {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart(
@@ -638,7 +719,6 @@ class WisprAccessibilityService : AccessibilityService() {
                 file.asRequestBody("audio/mp4".toMediaTypeOrNull())
             )
             .addFormDataPart("app_name", appName)
-            .addFormDataPart("context", screenContext)
             .build()
 
         val fullUrl = if (serverUrl.endsWith("/")) "${serverUrl}transcribe" else "$serverUrl/transcribe"
